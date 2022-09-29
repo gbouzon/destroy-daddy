@@ -13,6 +13,6 @@ public class RotateEarth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0.001f, 0.004f, 0);
+        transform.Rotate(0.001f, 0.4f, 0);
     }
 }
