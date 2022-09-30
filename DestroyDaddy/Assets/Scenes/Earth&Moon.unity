@@ -219,7 +219,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f275a645075c84b4da05cee1b633d28c, type: 2}
+  - {fileID: 2100000, guid: 62771f5b56775a9449250a321fca6fbf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -372,6 +372,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6906352945116191130, guid: f5ebca2cea5bc9a4e8ee3b706edcf3e7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cf182e8687fe3604088c495d23841230, type: 2}
     - target: {fileID: -2788455565594454348, guid: f5ebca2cea5bc9a4e8ee3b706edcf3e7, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -900,7 +904,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967294
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!135 &1127979847
 SphereCollider:
@@ -924,7 +928,7 @@ MeshRenderer:
   m_GameObject: {fileID: 1127979846}
   m_Enabled: 1
   m_CastShadows: 0
-  m_ReceiveShadows: 0
+  m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 0
@@ -934,7 +938,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: 9631fbc65b8e91941a590ae20d848ec2, type: 2}
   - {fileID: 2100000, guid: 975a34d4454de834cb880d5c8274edad, type: 2}
+  - {fileID: 2100000, guid: 9535f1671a1e90945a3cf95362f23578, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
