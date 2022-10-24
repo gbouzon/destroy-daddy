@@ -141,6 +141,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 0.5
+  deceleration: 0.1
+  maxWalkVelocity: 0.5
+  maxRunVelocity: 2
 --- !u!95 &311170768
 Animator:
   serializedVersion: 3
@@ -241,8 +244,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473411292}
-  m_LocalRotation: {x: -0.0401226, y: 0.90166074, z: -0.08574495, w: -0.42195484}
-  m_LocalPosition: {x: 7.6126456, y: 1.3127226, z: -0.39998728}
+  m_LocalRotation: {x: -0.0025106308, y: 0.99651855, z: -0.07669378, w: -0.032597315}
+  m_LocalPosition: {x: -0.07575703, y: 2.341322, z: 7.47435}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1595,6 +1598,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 0.5
+  deceleration: 0.5
+  maxWalkVelocity: 0.5
+  maxRunVelocity: 2
 --- !u!95 &672756643
 Animator:
   serializedVersion: 3
@@ -1651,6 +1657,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 0.5
+  deceleration: 0.1
+  maxWalkVelocity: 0.5
+  maxRunVelocity: 2
 --- !u!1 &1431936932
 GameObject:
   m_ObjectHideFlags: 0
@@ -1907,15 +1916,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c17128c25ed3b647a5b3fcccc89e8b3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.5768
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c17128c25ed3b647a5b3fcccc89e8b3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.26068598
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c17128c25ed3b647a5b3fcccc89e8b3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.808
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c17128c25ed3b647a5b3fcccc89e8b3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3205,6 +3214,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 584761fab006d6d42b4d0d8c56a51241, type: 3}
       propertyPath: m_Name
       value: GunHeavy
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 584761fab006d6d42b4d0d8c56a51241, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 584761fab006d6d42b4d0d8c56a51241, type: 3}
       propertyPath: m_RootOrder
