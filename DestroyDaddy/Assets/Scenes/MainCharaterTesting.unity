@@ -160,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c17128c25ed3b647a5b3fcccc89e8b3, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c17128c25ed3b647a5b3fcccc89e8b3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1469,13 +1469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47071337de9f761419a23a9852bebc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  velocityZ: 0
-  velocityX: 0
-  acceleration: 0.5
-  deceleration: 0.1
-  maxWalkVelocity: 0.5
-  maxRunVelocity: 2
 --- !u!95 &311170768
 Animator:
   serializedVersion: 3
@@ -1576,12 +1569,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473411292}
-  m_LocalRotation: {x: -0.019602437, y: -0.9768209, z: 0.18715617, w: -0.10202654}
-  m_LocalPosition: {x: -0.10893024, y: 2.614478, z: 3.6220312}
+  m_LocalRotation: {x: -0.016807694, y: 0.0077820662, z: -0.00017384962, w: -0.99982846}
+  m_LocalPosition: {x: 0.19828926, y: 1.8940761, z: -3.6953504}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &536954178
 PrefabInstance:
@@ -1620,7 +1613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c17128c25ed3b647a5b3fcccc89e8b3, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c17128c25ed3b647a5b3fcccc89e8b3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2934,13 +2927,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47071337de9f761419a23a9852bebc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  velocityZ: 0
-  velocityX: 0
-  acceleration: 0.5
-  deceleration: 0.5
-  maxWalkVelocity: 0.5
-  maxRunVelocity: 2
 --- !u!95 &672756643
 Animator:
   serializedVersion: 3
@@ -3109,13 +3095,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47071337de9f761419a23a9852bebc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  velocityZ: 0
-  velocityX: 0
-  acceleration: 0.2
-  deceleration: 0.2
-  maxWalkVelocity: 0.5
-  maxRunVelocity: 2
 --- !u!1 &1237665639 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1930314252456163132, guid: 9c17128c25ed3b647a5b3fcccc89e8b3, type: 3}
@@ -3231,7 +3210,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1555535386 stripped
 GameObject:
@@ -3355,7 +3334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c17128c25ed3b647a5b3fcccc89e8b3, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c17128c25ed3b647a5b3fcccc89e8b3, type: 3}
       propertyPath: m_LocalPosition.x

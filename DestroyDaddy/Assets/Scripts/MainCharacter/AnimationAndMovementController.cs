@@ -14,7 +14,10 @@ public class AnimationAndMovementController : MonoBehaviour
     Vector3 appliedMovement;
     bool isMovementPressed;
     bool isRunPressed;
-    bool isJumpPressed = false;
+    bool isJumpPressed;
+
+    bool isAimPressed;
+    bool isAim;
     float rotationFactorPerframe = 15.0f;
 
     float gravity = -9.8f;
@@ -24,6 +27,11 @@ public class AnimationAndMovementController : MonoBehaviour
     float maxJumpHeight = 1.5f;
     float maxJumpTime = 0.75f;
     bool isJumping = false;
+
+    int nullState = 0;
+    int idleState = 1;
+    int walkingState = 2;
+    int runningState = 3;
     void Awake(){
         playerInput = new PlayerInput();
         mainCharacterController = GetComponent<CharacterController>();
@@ -37,6 +45,8 @@ public class AnimationAndMovementController : MonoBehaviour
         playerInput.MainCharacterControls.Run.canceled+= onRun;
         playerInput.MainCharacterControls.Jump.started+= onJump;
         playerInput.MainCharacterControls.Jump.canceled+= onJump;
+        playerInput.MainCharacterControls.Aim.performed+= onAim;
+        playerInput.MainCharacterControls.Aim.canceled+= onAim;
 
         setupJumpVariable();
     }
@@ -70,6 +80,10 @@ public class AnimationAndMovementController : MonoBehaviour
         playerInput.MainCharacterControls.Disable();
     }
 
+    void onAim(InputAction.CallbackContext context){
+        isAimPressed = context.ReadValueAsButton();
+    }
+
     void onJump(InputAction.CallbackContext context){
         isJumpPressed = context.ReadValueAsButton();
     }
@@ -84,21 +98,28 @@ public class AnimationAndMovementController : MonoBehaviour
         if(!isJumping && mainCharacterController.isGrounded && isJumpPressed){
             isJumpAnimating = true;
             animator.SetBool("isJumping", true);
+            Debug.Log(animator.GetBool("isJumping"));
+            
             
             if(!isRunPressed && !isMovementPressed){
-                animator.SetInteger("JumpState", 0);
+                animator.SetInteger("JumpState", idleState);
             } else if(!isRunPressed && isMovementPressed) {
-                animator.SetInteger("JumpState", 1);
+                animator.SetInteger("JumpState", walkingState);
             } else if(isRunPressed && isMovementPressed){
-                 animator.SetInteger("JumpState", 2);
+                 animator.SetInteger("JumpState", runningState);
+            } else {
+                 animator.SetInteger("JumpState", nullState);
             }
+            Debug.Log(animator.GetInteger("JumpState"));
             
             isJumping = true;
             currentMovement.y = initialJumpVelocity ;
             appliedMovement.y = initialJumpVelocity;
         } else if(!isJumpPressed && isJumping && mainCharacterController.isGrounded){
             isJumping = false;
-            animator.SetInteger("JumpState", 0);
+            animator.SetInteger("JumpState", nullState);
+            Debug.Log(animator.GetBool("isJumping"));
+            Debug.Log(animator.GetInteger("JumpState"));
         }
     }
 
@@ -119,6 +140,7 @@ public class AnimationAndMovementController : MonoBehaviour
     void handleAnimation(){
         bool isWalking = animator.GetBool("isWalking");
         bool isRunning = animator.GetBool("isRunning");
+        bool isAiming = animator.GetBool("isAiming");
 
         if(isMovementPressed && !isWalking){
             animator.SetBool("isWalking", true);
@@ -131,15 +153,36 @@ public class AnimationAndMovementController : MonoBehaviour
         }else if((!isMovementPressed || !isRunPressed) && isRunning){
             animator.SetBool("isRunning", false);
         }
+
+        if(isAimPressed){
+            animator.SetBool("isAiming", true);
+            Debug.Log(animator.GetBool("isAiming"));
+            Debug.Log("IsAimPressed" + isAimPressed);
+
+            if(!isRunPressed && !isMovementPressed && !isWalking && !isRunning){
+                animator.SetInteger("AimState", idleState);
+            } else if(!isRunPressed && isMovementPressed && isWalking && !isRunning) {
+                animator.SetInteger("AimState", walkingState);
+            } else if((isMovementPressed && isRunPressed) && isRunning){
+                 animator.SetInteger("AimState", runningState);
+            } else {
+                animator.SetInteger("AimState", nullState);
+            }
+
+
+        } else if (!isAimPressed && isAiming){
+            animator.SetBool("isAiming", false);
+            animator.SetInteger("AimState", nullState);
+        }
     }
 
     void handleGravity(){
         bool isFalling = currentMovement.y <= 0.0f || !isJumpPressed;
         float fallMultiplier = 2.0f;
         if(mainCharacterController.isGrounded){
-            if(isJumpAnimating && !isJumpPressed){
+            if(isJumpAnimating){
                 animator.SetBool("isJumping", false);
-                animator.SetInteger("JumpState", 0);
+                animator.SetInteger("JumpState", nullState);
                 isJumpAnimating = false;
             }
 
