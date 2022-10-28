@@ -33,7 +33,7 @@ public class CameraBehaviour : MonoBehaviour
         distanceFromTarget += mouseScroll;
 
         rotationX = Mathf.Clamp(rotationX, -60, 60);
-        distanceFromTarget = Mathf.Clamp(distanceFromTarget, 3, 15);
+        distanceFromTarget = Mathf.Clamp(distanceFromTarget, 10, 35);
 
         transform.localEulerAngles = new Vector3(rotationX * -1, rotationY, 0);
         transform.position = target.position - transform.forward * distanceFromTarget;
