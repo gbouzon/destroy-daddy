@@ -48,13 +48,13 @@ public class AnimationAndMovementController : MonoBehaviour
         handleRotation();
         if(isRunPressed){
             appliedMovement.x = currentRunMovement.x; 
-            appliedMovement.y = currentRunMovement.y; 
+            appliedMovement.z = currentRunMovement.z; 
         } else {
             appliedMovement.x = currentMovement.x; 
-            appliedMovement.y = currentMovement.y; 
+            appliedMovement.z = currentMovement.z; 
         }
 
-        mainCharacterController.Move(currentMovement * Time.deltaTime);
+        mainCharacterController.Move(appliedMovement * Time.deltaTime);
         handleGravity();
         handleJump();
         
@@ -111,8 +111,8 @@ public class AnimationAndMovementController : MonoBehaviour
         currentMovementInput = context.ReadValue<Vector2>();
         currentMovement.x = currentMovementInput.x;
         currentMovement.z = currentMovementInput.y;
-        currentRunMovement.x = currentMovementInput.x * 3.0f;
-        currentRunMovement.z = currentMovementInput.y  * 3.0f;
+        currentRunMovement.x = currentMovementInput.x * 5.0f;
+        currentRunMovement.z = currentMovementInput.y  * 5.0f;
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
 
