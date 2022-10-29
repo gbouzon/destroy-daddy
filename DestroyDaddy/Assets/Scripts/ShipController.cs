@@ -15,6 +15,10 @@ public class ShipController : MonoBehaviour
     ParticleSystem leftThrust;
     [SerializeField]
     ParticleSystem rightThrust;
+    [SerializeField]
+    ParticleSystem leftJet;
+    [SerializeField]
+    ParticleSystem rightJet;
 
     AudioSource audioSource;
 
@@ -31,20 +35,29 @@ public class ShipController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W)) {
             MoveInDirectionOfInput();
+            BothJets();
+        }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A)) {
             transform.Rotate(0, -0.03f, 0);
+            RightJet();
+        }
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S)) {
             transform.Rotate(-0.03f, 0, 0);
+            BothJets();
+        }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D)) {
             transform.Rotate(0, 0.03f, 0);
+            LeftJet();
+        }
         
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKey(KeyCode.F)) {
             fuel = 1000;
+        }
 
         if (fuel > 0) {
             if (Input.GetKeyDown(KeyCode.Space)) {
@@ -63,6 +76,11 @@ public class ShipController : MonoBehaviour
             fuel -= 0.1f;
             Debug.Log(fuel);
         }
+
+        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && 
+        !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
+            StopJets();
+        }
     }
 
     void StartThrust() {
@@ -77,7 +95,29 @@ public class ShipController : MonoBehaviour
         leftThrust.Stop();
         rightThrust.Stop();
         audioSource.Stop();
+    }
 
+    void BothJets() {
+        leftJet.Play();
+        rightJet.Play();
+        fuel -= 0.001f;
+    }
+
+    void LeftJet() {
+        leftJet.Play();
+        rightJet.Stop();
+        fuel -= 0.001f;
+    }
+
+    void RightJet() {
+        rightJet.Play();
+        leftJet.Stop();
+        fuel -= 0.001f;
+    }
+
+    void StopJets() {
+        leftJet.Stop();
+        rightJet.Stop();
     }
 
     public void MoveInDirectionOfInput() {
