@@ -7,6 +7,7 @@ TagManager:
   - Earth
   - Enemy
   - Ground
+  - bugPrefab
   layers:
   - Default
   - TransparentFX
