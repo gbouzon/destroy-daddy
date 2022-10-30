@@ -232,8 +232,8 @@ public class AnimationAndMovementController : MonoBehaviour
     void OnTriggerStay(Collider col) {
         if(col.gameObject.name == "Ship"){
             if (Input.GetKey(KeyCode.F)) {
+                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
                 SceneManager.LoadScene("Space");
-                SceneManager.UnloadSceneAsync("EarthScene");
             }
         }
     }
