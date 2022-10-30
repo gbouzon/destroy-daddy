@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("EarthScene");
+        SceneManager.LoadScene("Earth");
         SceneManager.UnloadSceneAsync("MainMenu");
     }
 }

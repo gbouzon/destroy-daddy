@@ -13,6 +13,6 @@ public class RotatePlanet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, 0.02f, 0);
+        transform.Rotate(0, 0.04f, 0);
     }
 }
