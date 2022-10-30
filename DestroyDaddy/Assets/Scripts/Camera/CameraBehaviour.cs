@@ -15,6 +15,8 @@ public class CameraBehaviour : MonoBehaviour
 
     [SerializeField]
     private float distanceFromTarget;
+
+
     // Start is called before the first frame update
     void Start()
     {

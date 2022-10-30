@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class AnimationAndMovementController : MonoBehaviour
 {
+
+    [SerializeField]
+    GameObject enterShipCanvas;
+
     PlayerInput playerInput;
     CharacterController mainCharacterController; 
     Animator animator;
@@ -247,5 +252,26 @@ public class AnimationAndMovementController : MonoBehaviour
 
 
        
+    }
+
+    void OnTriggerEnter(Collider col) {
+        if(col.gameObject.name == "Ship"){
+            enterShipCanvas.SetActive(true);
+        }
+    }
+
+    void OnTriggerStay(Collider col) {
+        if(col.gameObject.name == "Ship"){
+            if (Input.GetKey(KeyCode.F)) {
+                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+                SceneManager.LoadScene("Space");
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider col) {
+        if(col.gameObject.name == "Ship"){
+            enterShipCanvas.SetActive(false);
+        }
     }
 }
