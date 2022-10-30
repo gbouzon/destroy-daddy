@@ -7,6 +7,7 @@ public class spawnEnemies : MonoBehaviour
 
     public GameObject bugPrefab;
     private float respawnTime = 2.0f;
+    int pickSpawnLocation;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,23 @@ public class spawnEnemies : MonoBehaviour
     {
         GameObject a = Instantiate(bugPrefab) as GameObject;
         //this is where i randomize it's spawning position
-        a.transform.position = new Vector3(Random.Range(600f, 800f), Random.Range(100f, 130f), Random.Range(300f, 400f));
+        pickSpawnLocation = Random.Range(0, 3);
+        switch (pickSpawnLocation)
+        {
+            case 0:
+                a.transform.position = new Vector3(700,120,400);
+                break;
+            case 1:
+                a.transform.position = new Vector3(815, 25, 105);
+                break;
+            case 2:
+                a.transform.position = new Vector3(920, 28, 270);
+                break;
+            default:
+                a.transform.position = new Vector3(555, 75, 315);
+                break;
+        }
+        
     }
     IEnumerator enemyWave()
     {

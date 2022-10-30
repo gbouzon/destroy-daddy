@@ -10,7 +10,7 @@ public class bug : MonoBehaviour
     void Start()
     {
         //make every time a different speed for funzies
-        t = Random.Range(0.001f, 0.01f);
+        t = Random.Range(0.0001f, 0.001f);
         //initating target as the main character
         GameObject player = GameObject.FindWithTag("Player");
         target = player.GetComponent<Transform>();
