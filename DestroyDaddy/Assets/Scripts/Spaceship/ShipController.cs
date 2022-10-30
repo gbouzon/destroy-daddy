@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ShipController : MonoBehaviour
 {
@@ -24,10 +25,11 @@ public class ShipController : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 30;
         fuel = 100000;
         count = 0;
         thrustOn = false;
-        speed = 15f;
+        speed = 50f;
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -41,17 +43,17 @@ public class ShipController : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.A)) {
-            transform.Rotate(0, -0.03f, 0);
+            transform.Rotate(0, -0.3f, 0);
             RightJet();
         }
 
         if (Input.GetKey(KeyCode.S)) {
-            transform.Rotate(-0.03f, 0, 0);
+            transform.Rotate(-0.3f, 0, 0);
             BothJets();
         }
 
         if (Input.GetKey(KeyCode.D)) {
-            transform.Rotate(0, 0.03f, 0);
+            transform.Rotate(0, 0.3f, 0);
             LeftJet();
         }
         
@@ -73,12 +75,11 @@ public class ShipController : MonoBehaviour
 
         if (thrustOn) {
             rb.AddForce(transform.forward * speed);
-            fuel -= 0.1f;
+            fuel -= 0.2f;
             Debug.Log(fuel);
         }
 
-        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && 
-        !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
+        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
             StopJets();
         }
     }
@@ -100,19 +101,19 @@ public class ShipController : MonoBehaviour
     void BothJets() {
         leftJet.Play();
         rightJet.Play();
-        fuel -= 0.001f;
+        fuel -= 0.002f;
     }
 
     void LeftJet() {
         leftJet.Play();
         rightJet.Stop();
-        fuel -= 0.001f;
+        fuel -= 0.002f;
     }
 
     void RightJet() {
         rightJet.Play();
         leftJet.Stop();
-        fuel -= 0.001f;
+        fuel -= 0.002f;
     }
 
     void StopJets() {
@@ -132,11 +133,16 @@ public class ShipController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(
             transform.rotation,
             Quaternion.LookRotation(targetDirection),
-            Time.deltaTime * 0.3f
+            Time.deltaTime * 0.6f
             );
         }
         
         //rb.velocity = targetDirection.normalized * 0.5f;     //normalized prevents char moving faster than it should with diagonal input
+    }
+
+    void OnTriggerEnter(Collider col) {
+        SceneManager.LoadScene(col.gameObject.name);
+        SceneManager.UnloadSceneAsync("Space");
     }
 }
 
