@@ -2271,13 +2271,95 @@ MonoBehaviour:
   mouseSensitivity: 6
   target: {fileID: 305192968}
   distanceFromTarget: 3
+<<<<<<< HEAD
 --- !u!114 &1859058271
+=======
+--- !u!1001 &1930578464
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_Name
+      value: plant (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 668.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 438.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9727784
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.20713991
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.013627496
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.10300365
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 23.942
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 1.013
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 12.303
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 671bfd9b8530e5441a0bba1017e350c5, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+--- !u!1 &1930578465 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 8afaaddeaf6221341a4db43fb691c072, type: 3}
+  m_PrefabInstance: {fileID: 1930578464}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859058266}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88da9f22cf7065940b24a13a037c2139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSensitivity: 10
+  target: {fileID: 903462805}
+  distanceFromTarget: 10
+  pitchMinMax: {x: 2, y: 85}
+  rotationSmoothTime: 0.12
+--- !u!114 &1859058272
+>>>>>>> 5d2d9698bff3806da6879d47c442297584bf00e3
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859058266}
+<<<<<<< HEAD
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88da9f22cf7065940b24a13a037c2139, type: 3}
@@ -2300,6 +2382,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e437663627b98464eaf6f977c2265a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+=======
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e437663627b98464eaf6f977c2265a33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+>>>>>>> 5d2d9698bff3806da6879d47c442297584bf00e3
   orientation: {fileID: 0}
   player: {fileID: 0}
   playerObj: {fileID: 0}
