@@ -37,7 +37,7 @@ public class GunController : MonoBehaviour
         
         timer += Time.deltaTime;
         if(timer >= fireRate){
-            if (Input.GetButtonDown("1"))
+            if (Input.GetButtonDown("Fire1"))
             {  
                 mainCharacterScript.handleAiming();
                 timer = 0f; 
@@ -53,15 +53,15 @@ public class GunController : MonoBehaviour
         if(Physics.Raycast(firePoint.position, firePoint.forward * 100, out hit, range)){
             if(hit.collider.gameObject.tag == "Enemy"){
                 var enemy = hit.collider.GetComponent<EnemyHealth>();
+                Debug.Log("Hit enemy: " + hit.transform.name);
                 enemy.TakeDamage(damage);
-                Debug.Log("Enemy healt" + enemy.currentHealt);
+                Debug.Log(hit.transform.name + " health: " + enemy.currentHealth);
             }
            
         }
         Debug.DrawRay(firePoint.position, firePoint.forward * 100, Color.yellow, range);
-        
-
+    
     }
+}
 
     
-}

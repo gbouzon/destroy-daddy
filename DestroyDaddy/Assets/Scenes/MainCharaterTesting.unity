@@ -289,6 +289,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &424774513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424774511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53f321f151ffd5b41836a5e82b400abb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
 --- !u!64 &424774515
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -381,7 +394,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473411292}
   m_LocalRotation: {x: 0.011187178, y: 0.16589756, z: -0.001882129, w: 0.9860777}
-  m_LocalPosition: {x: 529.04144, y: 491.10452, z: 1749.5231}
+  m_LocalPosition: {x: 529.00287, y: 491.10452, z: 1749.5365}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1791,7 +1804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2592645937455021423, guid: a34dd93404ae1054e8b80457e1c74f9e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 529.04144
+      value: 529.00287
       objectReference: {fileID: 0}
     - target: {fileID: 2592645937455021423, guid: a34dd93404ae1054e8b80457e1c74f9e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1799,7 +1812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2592645937455021423, guid: a34dd93404ae1054e8b80457e1c74f9e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1749.5231
+      value: 1749.5365
       objectReference: {fileID: 0}
     - target: {fileID: 2592645937455021423, guid: a34dd93404ae1054e8b80457e1c74f9e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2278,7 +2291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f321f151ffd5b41836a5e82b400abb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealt: 0
+  currentHealth: 0
 --- !u!1001 &1655615603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3994,6 +4007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c3e034d1394694b9d759df97015984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enterShipCanvas: {fileID: 0}
 --- !u!143 &1969744234
 CharacterController:
   m_ObjectHideFlags: 0
