@@ -62,6 +62,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""7579409c-3a09-4fe9-aef9-cf4255e1b83e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""View"",
+                    ""type"": ""Value"",
+                    ""id"": ""2efca7e6-fd35-4e54-867e-a19f6c2b421c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -218,6 +236,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f223b575-f587-445a-9b35-c17fc69d8ee5"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5054771d-6bef-4481-9eec-1f409509012a"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f8965f79-a1df-43f9-b6a7-c91980d68d1b"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""View"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -230,6 +281,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_MainCharacterControls_Run = m_MainCharacterControls.FindAction("Run", throwIfNotFound: true);
         m_MainCharacterControls_Jump = m_MainCharacterControls.FindAction("Jump", throwIfNotFound: true);
         m_MainCharacterControls_Aim = m_MainCharacterControls.FindAction("Aim", throwIfNotFound: true);
+        m_MainCharacterControls_Shoot = m_MainCharacterControls.FindAction("Shoot", throwIfNotFound: true);
+        m_MainCharacterControls_View = m_MainCharacterControls.FindAction("View", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -293,6 +346,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_MainCharacterControls_Run;
     private readonly InputAction m_MainCharacterControls_Jump;
     private readonly InputAction m_MainCharacterControls_Aim;
+    private readonly InputAction m_MainCharacterControls_Shoot;
+    private readonly InputAction m_MainCharacterControls_View;
     public struct MainCharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -301,6 +356,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_MainCharacterControls_Run;
         public InputAction @Jump => m_Wrapper.m_MainCharacterControls_Jump;
         public InputAction @Aim => m_Wrapper.m_MainCharacterControls_Aim;
+        public InputAction @Shoot => m_Wrapper.m_MainCharacterControls_Shoot;
+        public InputAction @View => m_Wrapper.m_MainCharacterControls_View;
         public InputActionMap Get() { return m_Wrapper.m_MainCharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -322,6 +379,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Aim.started -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnAim;
+                @Shoot.started -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnShoot;
+                @View.started -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnView;
+                @View.performed -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnView;
+                @View.canceled -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnView;
             }
             m_Wrapper.m_MainCharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -338,6 +401,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
+                @View.started += instance.OnView;
+                @View.performed += instance.OnView;
+                @View.canceled += instance.OnView;
             }
         }
     }
@@ -348,5 +417,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
+        void OnView(InputAction.CallbackContext context);
     }
 }

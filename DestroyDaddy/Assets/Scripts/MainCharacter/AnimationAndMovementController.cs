@@ -18,7 +18,7 @@ public class AnimationAndMovementController : MonoBehaviour
 
     bool isAimPressed;
     bool isAim;
-    float rotationFactorPerframe = 15.0f;
+    float rotationFactorPerframe = 45.0f;
 
     float gravity = -9.8f;
     float groundedGravity = -.05f;
@@ -27,6 +27,8 @@ public class AnimationAndMovementController : MonoBehaviour
     float maxJumpHeight = 1.5f;
     float maxJumpTime = 0.75f;
     bool isJumping = false;
+
+    Vector3 rotation;
 
     int nullState = 0;
     int idleState = 1;
@@ -41,12 +43,15 @@ public class AnimationAndMovementController : MonoBehaviour
         playerInput.MainCharacterControls.Move.started += onMovementInput;
         playerInput.MainCharacterControls.Move.canceled += onMovementInput;
         playerInput.MainCharacterControls.Move.performed += onMovementInput;
+
         playerInput.MainCharacterControls.Run.started+= onRun;
         playerInput.MainCharacterControls.Run.canceled+= onRun;
         playerInput.MainCharacterControls.Jump.started+= onJump;
         playerInput.MainCharacterControls.Jump.canceled+= onJump;
         playerInput.MainCharacterControls.Aim.performed+= onAim;
         playerInput.MainCharacterControls.Aim.canceled+= onAim;
+        playerInput.MainCharacterControls.View.performed+= onView;
+        playerInput.MainCharacterControls.View.canceled+= onView;
 
         setupJumpVariable();
     }
@@ -64,9 +69,11 @@ public class AnimationAndMovementController : MonoBehaviour
             appliedMovement.z = currentMovement.z; 
         }
 
+        
         mainCharacterController.Move(appliedMovement * Time.deltaTime);
         handleGravity();
         handleJump();
+        handleAiming();
         
     }
     
@@ -82,6 +89,11 @@ public class AnimationAndMovementController : MonoBehaviour
 
     void onAim(InputAction.CallbackContext context){
         isAimPressed = context.ReadValueAsButton();
+    }
+    void onView(InputAction.CallbackContext context){
+        currentMovementInput = context.ReadValue<Vector2>();
+        rotation.x = context.ReadValue<Vector2>().x;
+        rotation.z = context.ReadValue<Vector2>().y;
     }
 
     void onJump(InputAction.CallbackContext context){
@@ -130,6 +142,7 @@ public class AnimationAndMovementController : MonoBehaviour
 
     void onMovementInput(InputAction.CallbackContext context){
         currentMovementInput = context.ReadValue<Vector2>();
+
         currentMovement.x = currentMovementInput.x;
         currentMovement.z = currentMovementInput.y;
         currentRunMovement.x = currentMovementInput.x * 5.0f;
@@ -137,7 +150,7 @@ public class AnimationAndMovementController : MonoBehaviour
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
 
-    void handleAnimation(){
+    public void handleAnimation(){
         bool isWalking = animator.GetBool("isWalking");
         bool isRunning = animator.GetBool("isRunning");
         bool isAiming = animator.GetBool("isAiming");
@@ -154,10 +167,18 @@ public class AnimationAndMovementController : MonoBehaviour
             animator.SetBool("isRunning", false);
         }
 
-        if(isAimPressed){
+       
+    }
+
+    public void handleAiming(){
+        bool isWalking = animator.GetBool("isWalking");
+        bool isRunning = animator.GetBool("isRunning");
+        bool isAiming = animator.GetBool("isAiming");
+        bool isFiring = Input.GetButton("Fire1");
+
+         if(isAimPressed || isFiring){
             animator.SetBool("isAiming", true);
-            Debug.Log(animator.GetBool("isAiming"));
-            Debug.Log("IsAimPressed" + isAimPressed);
+            
 
             if(!isRunPressed && !isMovementPressed && !isWalking && !isRunning){
                 animator.SetInteger("AimState", idleState);
@@ -169,10 +190,16 @@ public class AnimationAndMovementController : MonoBehaviour
                 animator.SetInteger("AimState", nullState);
             }
 
+            Debug.Log("isAiming animation : " + animator.GetBool("isAiming"));
+            Debug.Log("Mouse input : " + isFiring);
+            Debug.Log("IsAimPressed " + isAimPressed);
 
-        } else if (!isAimPressed && isAiming){
+        } else if ((!isAimPressed && isAiming) || isFiring){
             animator.SetBool("isAiming", false);
             animator.SetInteger("AimState", nullState);
+            Debug.Log("isAiming animation : " + animator.GetBool("isAiming"));
+            Debug.Log("AimState animation : " + animator.GetBool("isAiming"));
+            Debug.Log("IsAimPressed " + isAimPressed);
         }
     }
 
@@ -202,19 +229,23 @@ public class AnimationAndMovementController : MonoBehaviour
     }
 
     void handleRotation(){
-        Vector3 positionToLookAt;
+         Vector3 positionToLookAt;
 
-        //change in position our charater should point to
+        // //change in position our charater should point to
         positionToLookAt.x = currentMovement.x;
         positionToLookAt.y = 0.0f;
         positionToLookAt.z = currentMovement.z;
 
-        //current rotation of our character
-        Quaternion currentRotation = transform.rotation; 
-
-        if(isMovementPressed){
+        // //current rotation of our character
+         Quaternion currentRotation = transform.rotation; 
+        transform.Rotate(Vector3.up, rotation.x * rotationFactorPerframe * Time.deltaTime);
+          if(isMovementPressed){
+              mainCharacterController.SimpleMove(transform.forward * 5 * appliedMovement.x * Time.deltaTime);
             Quaternion tragetRotation =  Quaternion.LookRotation(positionToLookAt);
             transform.rotation = Quaternion.Slerp(currentRotation, tragetRotation, rotationFactorPerframe * Time.deltaTime);
-        }
+         }
+
+
+       
     }
 }
