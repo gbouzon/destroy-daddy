@@ -39,7 +39,10 @@ public class AnimationAndMovementController : MonoBehaviour
     int idleState = 1;
     int walkingState = 2;
     int runningState = 3;
+
+    Transform camera;
     void Awake(){
+        camera = Camera.main.transform;
         playerInput = new PlayerInput();
         mainCharacterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
@@ -234,7 +237,7 @@ public class AnimationAndMovementController : MonoBehaviour
     }
 
     void handleRotation(){
-         Vector3 positionToLookAt;
+        Vector3 positionToLookAt;
 
         // //change in position our charater should point to
         positionToLookAt.x = currentMovement.x;
