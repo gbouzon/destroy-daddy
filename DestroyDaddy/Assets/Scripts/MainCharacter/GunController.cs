@@ -53,8 +53,9 @@ public class GunController : MonoBehaviour
         if(Physics.Raycast(firePoint.position, firePoint.forward * 100, out hit, range)){
             if(hit.collider.gameObject.tag == "Enemy"){
                 var enemy = hit.collider.GetComponent<EnemyHealth>();
+                Debug.Log("Hit enemy: " + hit.transform.name);
                 enemy.TakeDamage(damage);
-                Debug.Log("Enemy healt" + enemy.currentHealt);
+                Debug.Log(hit.transform.name + " health: " + enemy.currentHealth);
             }
            
         }

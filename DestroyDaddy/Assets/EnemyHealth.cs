@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    int maxHealth = 50; 
-    public int currentHealt; 
+    int maxHealth = 10; 
+    public int currentHealth; 
     // Start is called before the first frame update
     void OnEnable(){
-            currentHealt = maxHealth;
+            currentHealth = maxHealth;
     }
 
     public void TakeDamage(int damage){
-        currentHealt -= damage;
-        if(currentHealt <= 0){
+        currentHealth -= damage;
+        if(currentHealth <= 0){
             gameObject.SetActive(false);
         }
     }
