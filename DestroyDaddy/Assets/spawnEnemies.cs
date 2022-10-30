@@ -13,11 +13,13 @@ public class spawnEnemies : MonoBehaviour
         //bugPrefab = GameObject.FindWithTag("bugPrefab");
       
         StartCoroutine(enemyWave());
+        bugPrefab.tag = "Enemy";
         bugPrefab.AddComponent<EnemyHealth>();
     }
 
     void Update() {
         bugPrefab.tag = "Enemy";
+        bugPrefab.AddComponent<EnemyHealth>();
     }
     private void spawnEnemy()
     {

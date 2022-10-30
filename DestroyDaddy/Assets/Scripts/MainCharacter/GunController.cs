@@ -37,7 +37,7 @@ public class GunController : MonoBehaviour
         
         timer += Time.deltaTime;
         if(timer >= fireRate){
-            if (Input.GetButtonDown("1"))
+            if (Input.GetButtonDown("Fire1"))
             {  
                 mainCharacterScript.handleAiming();
                 timer = 0f; 
@@ -60,9 +60,8 @@ public class GunController : MonoBehaviour
            
         }
         Debug.DrawRay(firePoint.position, firePoint.forward * 100, Color.yellow, range);
-        
-
+    
     }
+}
 
     
-}
