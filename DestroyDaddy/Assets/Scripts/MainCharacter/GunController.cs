@@ -37,7 +37,7 @@ public class GunController : MonoBehaviour
         
         timer += Time.deltaTime;
         if(timer >= fireRate){
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("1"))
             {  
                 mainCharacterScript.handleAiming();
                 timer = 0f; 
