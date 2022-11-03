@@ -8,9 +8,10 @@ public class ShipController : MonoBehaviour
 
     Rigidbody rb;
     float speed;
+    public static float maxFuel = 100;
     private int count;
     private bool thrustOn;
-    float fuel;
+    public static float fuel;
 
     [SerializeField]
     ParticleSystem leftThrust;
@@ -26,7 +27,7 @@ public class ShipController : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 30;
-        fuel = 100000;
+        fuel = maxFuel;
         count = 0;
         thrustOn = false;
         speed = 50f;
