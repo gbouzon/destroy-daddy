@@ -8,7 +8,7 @@ public class ShipController : MonoBehaviour
 
     Rigidbody rb;
     float speed;
-    public static float maxFuel = 100;
+    public static float maxFuel = 10000;
     private int count;
     private bool thrustOn;
     public static float fuel;
@@ -30,7 +30,7 @@ public class ShipController : MonoBehaviour
         fuel = maxFuel;
         count = 0;
         thrustOn = false;
-        speed = 50f;
+        speed = 500f;
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
     }
