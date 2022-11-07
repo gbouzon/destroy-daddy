@@ -4,33 +4,43 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
+
 public class AnimationAndMovementController : MonoBehaviour
 {
-
-    [SerializeField]
-    GameObject enterShipCanvas;
-    [SerializeField]
-    Transform mainCamera;
-
-    // PlayerInput class was generated from The New Input System in Inspector
-    PlayerInput playerInput; 
-    CharacterController mainCharacterController; 
+    private CharacterController mainCharacterController;
     Animator animator;
+    PlayerInput playerInput;
+    Vector3 currentMovement;  
+    
 
-    // variable to store player input values
-    Vector2 currentMovementInput;
-    Vector3 currentMovement;
-    Vector3 currentRunMovement;
-    Vector3 appliedMovement;
+    // rotation with Camera Variable
+    [SerializeField]
+    Camera followCamera;
+    Vector2 mouseInput;
+    float rotationVelocity;
+    
+    
+ 
+    private Vector2 movementInput;
+    
+    const float _threshold = 0.01f; 
+
+    float runMultiplier = 3.0f;
+    private float playerSpeed;
+
+    // if user input Bool
     bool isMovementPressed;
     bool isRunPressed;
     bool isJumpPressed;
     bool isAimPressed;
+    bool isMouseMove; 
 
-    // Constant variable
-    float rotationFactorPerframe = 45.0f;
-    int zero = 0;
-    float runMultiplier = 5.0f; 
+    
+
+    // cinemachine
+    private float cinemachineTargetYaw;
+    private float cinemachineTargetPitch;
+
 
     // gravity variable 
     float gravity = -9.8f;
@@ -42,8 +52,8 @@ public class AnimationAndMovementController : MonoBehaviour
     float maxJumpHeight = 1.5f;
     float maxJumpTime = 0.75f;
     bool isJumping = false;
+    private float verticalVelocity;
 
-    Vector3 rotation;
 
     // Animation State
     int nullState = 0;
@@ -51,14 +61,12 @@ public class AnimationAndMovementController : MonoBehaviour
     int walkingState = 2;
     int runningState = 3;
 
-    
     void Awake(){
-        //camera = Camera.main.transform;
+
         // initially set reference variable
         playerInput = new PlayerInput();
-        mainCharacterController = GetComponent<CharacterController>();
+        mainCharacterController = this.GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        
 
         // Set the player input callBack
         // return Vector 2
@@ -78,29 +86,33 @@ public class AnimationAndMovementController : MonoBehaviour
         playerInput.MainCharacterControls.Aim.performed+= onAim;
         playerInput.MainCharacterControls.Aim.canceled+= onAim;
 
+        // return true or false 
+        playerInput.MainCharacterControls.Mouse.performed+= onMouse;
+        playerInput.MainCharacterControls.Mouse.canceled+= onMouse;
+
         setupJumpVariable();
     }
 
 
-    void Update()
-    {   
-        
-        handleMovementAnimation();
-        handleAimingAnimation();
-
-        handleRotation();
-        //appliedMovement.x = mainCamera.rotation.eulerAngles.y; 
-        appliedMovement.z = currentMovement.z;
-        this.transform.eulerAngles = new Vector3(0,mainCamera.rotation.eulerAngles.y,0);
-        //appliedMovement.y =  Quaternion.AngleAxis(mainCamera.transform.eulerAngles.y, Vector3.up);
-        appliedMovement = Quaternion.AngleAxis(mainCamera.rotation.eulerAngles.y, Vector3.up) * appliedMovement;
-        mainCharacterController.Move( appliedMovement * Time.deltaTime); // make the Character move
-        
+    // Update is called once per frame
+    void Update(){
+        CameraRotation();  
         handleGravity();
         handleJump();
+        move();
+        handleMovementAnimation();
+        handleAimingAnimation();
+        
     }
-    
+
     //=================================================Handle functions for the playerInput CallBack==================================================================//
+    
+    // callBack handler function for aim button
+    void onMouse(InputAction.CallbackContext context){
+       mouseInput = context.ReadValue<Vector2>();
+       isMouseMove = mouseInput != Vector2.zero; 
+    }
+
 
     // callBack handler function for aim button
     void onAim(InputAction.CallbackContext context){
@@ -117,15 +129,13 @@ public class AnimationAndMovementController : MonoBehaviour
         isRunPressed = context.ReadValueAsButton();
     }
 
-    // callBack handler function to set the player input values
+     // callBack handler function to set the player input values
     void onMovementInput(InputAction.CallbackContext context){
-        // Vector 3 = {x, y, z};
-        currentMovementInput = context.ReadValue<Vector2>();
-        // x is horizentoal
-        //currentMovement.x = !isRunPressed ? currentMovementInput.x : currentMovementInput.x * runMultiplier;
-        // z is vertical
-        currentMovement.z = !isRunPressed ? currentMovementInput.y : currentMovementInput.y * runMultiplier;
-        isMovementPressed = currentMovementInput.x != zero || currentMovementInput.y != zero;
+        movementInput = context.ReadValue<Vector2>();
+
+        // Vector 3 = {x, y, z};    
+        currentMovement = new Vector3(movementInput.x, 0, movementInput.y);
+        isMovementPressed = currentMovement != Vector3.zero; 
     }
 
     void OnEnable(){
@@ -137,55 +147,56 @@ public class AnimationAndMovementController : MonoBehaviour
         // disable the charater controls action map
         playerInput.MainCharacterControls.Disable();
     }
-
 //============================================================Handle Rotation==================================================================//    
 
-    void handleRotation(){
-        
 
+    void move(){
+        playerSpeed = !isRunPressed ? 2.0f : 5.0f;
+        if(isMovementPressed){
+            float targetRotation = Mathf.Atan2(currentMovement.x, currentMovement.z) * Mathf.Rad2Deg +
+                                  followCamera.transform.eulerAngles.y;
+            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity,
+                    0.12f);
+            // rotate to face input direction relative to camera position
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f); 
 
-        //Vector3 positionToLookAt;
-
-        // //change in position our charater should point to
-        // positionToLookAt.x = currentMovement.x;
-        // positionToLookAt.y = 0.0f;
-        // positionToLookAt.z = currentMovement.z;
-
-            //positionToLookAt = Quaternion.AngleAxis(mainCamera.rotation.eulerAngles.y, Vector3.up) * currentMovement;
-            //positionToLookAt.Normalize();
-
+            //move forward base on the targetRotation
+            Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
             
-
-
-        //current rotation of our character
-       //Quaternion currentRotation = transform.rotation;
-
-    //  if(currentMovement != Vector3.zero){
-    //     // create a new rotatio based on where the player is currently pressing
-    //     Quaternion tragetRotation =  Quaternion.LookRotation(new Vector3(0,0,));
-    //     Debug.Log(positionToLookAt);
-    //     Debug.Log("TragetRotation: " + tragetRotation);
-    //     Debug.Log(("Camera: " + mainCamera.rotation.eulerAngles.y));
-        // // rotate the character to face teh positionToLookAt
-
-        
-        //transform.rotation = Quaternion.RotateTowards(currentRotation, tragetRotation, rotationFactorPerframe * Time.deltaTime);
-     //}
-        
-
-       
+            // Add movement to the Character
+            mainCharacterController.Move(targetDirection.normalized * (playerSpeed * Time.deltaTime) +
+                             new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime); 
+          }
+         
     }
 
-  
-    // private void OnApplicationFocus (bool focus){
-    //     if (focus)
-    //       Cursor.lockState =  CursorLockMode. Locked;
-    //     else  
-    //       Cursor.lockState = CursorLockMode. None;
+    void CameraRotation()
+        {
+            // if there is an input and camera position is not fixed
+            if (mouseInput.sqrMagnitude >= _threshold)
+            {
+                //Don't multiply mouse input by Time.deltaTime;
+                float deltaTimeMultiplier = isMouseMove ? 1.0f : Time.deltaTime;
 
-    // }
-    
+                cinemachineTargetYaw += mouseInput.x * deltaTimeMultiplier;
+                cinemachineTargetPitch += mouseInput.y * deltaTimeMultiplier;
+            }
 
+            // clamp our rotations so our values are limited 360 degrees
+            cinemachineTargetYaw = ClampAngle(cinemachineTargetYaw, float.MinValue, float.MaxValue);
+            cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -0.0f, 0.0f);
+
+            // Cinemachine will follow this target
+            this.transform.rotation = Quaternion.Euler(cinemachineTargetPitch + 0.0f,
+                cinemachineTargetYaw, 0.0f);
+        }    
+
+     private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
+        {
+            if (lfAngle < -360f) lfAngle += 360f;
+            if (lfAngle > 360f) lfAngle -= 360f;
+            return Mathf.Clamp(lfAngle, lfMin, lfMax);
+        }
 
 //===========================================================Handle Jumping============================================================================//
 
@@ -211,18 +222,18 @@ public class AnimationAndMovementController : MonoBehaviour
             } else if(isRunPressed && isMovementPressed){
                  animator.SetInteger("JumpState", runningState);
             } else {
-                 animator.SetInteger("JumpState", nullState);
+                 animator.SetInteger("JumpState", idleState);
             }
             
             isJumping = true;
+            verticalVelocity = initialJumpVelocity;
             currentMovement.y = initialJumpVelocity ;
-            appliedMovement.y = initialJumpVelocity;
         } else if(!isJumpPressed && isJumping && mainCharacterController.isGrounded){
             isJumping = false;
+            isJumpAnimating = false;
             animator.SetInteger("JumpState", nullState);
         }
     }
-
 
     void handleGravity(){
         bool isFalling = currentMovement.y <= 0.0f || !isJumpPressed;
@@ -235,17 +246,18 @@ public class AnimationAndMovementController : MonoBehaviour
                 isJumpAnimating = false;
             }
             currentMovement.y = groundedGravity;
-            appliedMovement.y = groundedGravity;
+            verticalVelocity = groundedGravity;
         } else if(isFalling){
             // Velocity Verlet Integration
             float prevYVelocity = currentMovement.y;
             currentMovement.y = currentMovement.y + ( gravity * fallMultiplier *  Time.deltaTime);
-            appliedMovement.y = Mathf.Max((prevYVelocity + currentMovement.y) * .5f, -20.0f);
+            verticalVelocity = Mathf.Max((prevYVelocity + currentMovement.y) * .5f, -20.0f);
+
         }
         else {
             float prevYVelocity = currentMovement.y;
             currentMovement.y = currentMovement.y + ( gravity * Time.deltaTime);
-            appliedMovement.y = (prevYVelocity + currentMovement.y) * .5f;
+            verticalVelocity = (prevYVelocity + currentMovement.y) * .5f;
         }
     }
 
@@ -256,6 +268,7 @@ public class AnimationAndMovementController : MonoBehaviour
         bool isWalking = animator.GetBool("isWalking");
         bool isRunning = animator.GetBool("isRunning");
         
+        Debug.Log(isMovementPressed && !isWalking);
         //start walking if movement pressed is true and not already walking
         if(isMovementPressed && !isWalking){
             animator.SetBool("isWalking", true);
@@ -299,27 +312,6 @@ public class AnimationAndMovementController : MonoBehaviour
             animator.SetBool("isAiming", false);
             animator.SetInteger("AimState", nullState);
         }
-    }
+    }    
 
-
-    void OnTriggerEnter(Collider col) {
-        if(col.gameObject.name == "Ship"){
-            enterShipCanvas.SetActive(true);
-        }
-    }
-
-    void OnTriggerStay(Collider col) {
-        if(col.gameObject.name == "Ship"){
-            if (Input.GetKey(KeyCode.F)) {
-                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-                SceneManager.LoadScene("Space");
-            }
-        }
-    }
-
-    void OnTriggerExit(Collider col) {
-        if(col.gameObject.name == "Ship"){
-            enterShipCanvas.SetActive(false);
-        }
-    }
 }

@@ -73,7 +73,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""View"",
+                    ""name"": ""Mouse"",
                     ""type"": ""Value"",
                     ""id"": ""2efca7e6-fd35-4e54-867e-a19f6c2b421c"",
                     ""expectedControlType"": ""Vector2"",
@@ -266,7 +266,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""View"",
+                    ""action"": ""Mouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -282,7 +282,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_MainCharacterControls_Jump = m_MainCharacterControls.FindAction("Jump", throwIfNotFound: true);
         m_MainCharacterControls_Aim = m_MainCharacterControls.FindAction("Aim", throwIfNotFound: true);
         m_MainCharacterControls_Shoot = m_MainCharacterControls.FindAction("Shoot", throwIfNotFound: true);
-        m_MainCharacterControls_View = m_MainCharacterControls.FindAction("View", throwIfNotFound: true);
+        m_MainCharacterControls_Mouse = m_MainCharacterControls.FindAction("Mouse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -347,7 +347,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_MainCharacterControls_Jump;
     private readonly InputAction m_MainCharacterControls_Aim;
     private readonly InputAction m_MainCharacterControls_Shoot;
-    private readonly InputAction m_MainCharacterControls_View;
+    private readonly InputAction m_MainCharacterControls_Mouse;
     public struct MainCharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -357,7 +357,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_MainCharacterControls_Jump;
         public InputAction @Aim => m_Wrapper.m_MainCharacterControls_Aim;
         public InputAction @Shoot => m_Wrapper.m_MainCharacterControls_Shoot;
-        public InputAction @View => m_Wrapper.m_MainCharacterControls_View;
+        public InputAction @Mouse => m_Wrapper.m_MainCharacterControls_Mouse;
         public InputActionMap Get() { return m_Wrapper.m_MainCharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -382,9 +382,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnShoot;
-                @View.started -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnView;
-                @View.performed -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnView;
-                @View.canceled -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnView;
+                @Mouse.started -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnMouse;
+                @Mouse.performed -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnMouse;
+                @Mouse.canceled -= m_Wrapper.m_MainCharacterControlsActionsCallbackInterface.OnMouse;
             }
             m_Wrapper.m_MainCharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -404,9 +404,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
-                @View.started += instance.OnView;
-                @View.performed += instance.OnView;
-                @View.canceled += instance.OnView;
+                @Mouse.started += instance.OnMouse;
+                @Mouse.performed += instance.OnMouse;
+                @Mouse.canceled += instance.OnMouse;
             }
         }
     }
@@ -418,6 +418,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
-        void OnView(InputAction.CallbackContext context);
+        void OnMouse(InputAction.CallbackContext context);
     }
 }

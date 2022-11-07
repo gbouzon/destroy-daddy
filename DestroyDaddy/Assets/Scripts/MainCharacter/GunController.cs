@@ -46,7 +46,7 @@ public class GunController : MonoBehaviour
         if(timer >= fireRate){
             if (Input.GetButtonDown("Fire1"))
             {  
-                mainCharacterScript.handleAiming();
+                mainCharacterScript.handleAimingAnimation();
                 timer = 0f; 
                 laserLine.enabled = true;
                 Shoot();
