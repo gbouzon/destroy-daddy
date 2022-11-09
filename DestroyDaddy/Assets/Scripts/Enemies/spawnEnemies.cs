@@ -14,7 +14,7 @@ public class spawnEnemies : MonoBehaviour
       
         StartCoroutine(enemyWave());
         bugPrefab.tag = "Enemy";
-        bugPrefab.AddComponent<EnemyHealth>();
+        //bugPrefab.AddComponent<EnemyHealth>();
     }
 
     private void spawnEnemy()

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class sloth : MonoBehaviour
 {
-    public Transform target;
+    private Transform target;
     private float t;
     private Animator animator;
     void Start()
     {
         t = Random.Range(0.001f, 0.01f);
+        GameObject player = GameObject.FindWithTag("Player");
+        target = player.GetComponent<Transform>();
         animator = GetComponent<Animator>();
     }
     void Update()
@@ -18,7 +20,18 @@ public class sloth : MonoBehaviour
         Vector3 b = target.position;
         if (Vector3.Distance(a, b) < 5)
         {
+            /*int pickAttack = Random.Range(0, 2);
+            if (pickAttack == 0)
+            {*/
+
+            animator.Play("biteAnimation");
+            //}
+            /*else
+            {
             animator.Play("groundsmackAnimation");
+                
+            }*/
+
         }
         else
         {

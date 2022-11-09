@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class diatryma : MonoBehaviour
 {
-    public Transform target;
-    public float t;
+    private Transform target;
     private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        target = player.GetComponent<Transform>();
         animator = GetComponent<Animator>();
     }
 
@@ -19,13 +20,13 @@ public class diatryma : MonoBehaviour
         Vector3 a = transform.position;
         Vector3 b = target.position;
         transform.LookAt(target);
-        if (Vector3.Distance(a,b) < 5)
+        if (Vector3.Distance(a,b) < 3.5f)
         {
             animator.Play("biteAnimation");
         }
         else
         {
-            transform.position = Vector3.Lerp(a, b, t);
+            transform.position = Vector3.Lerp(a, b, 0.01f);
         }
     }
 }

@@ -32,7 +32,16 @@ public class bug : MonoBehaviour
         //if box collider collides with character, attack
         if(collision.gameObject.tag == "Player")
         {
-            anim.Play("biteAnimation");
+            int pickAttack = Random.Range(0, 2);
+            if(pickAttack == 0)
+            {
+                anim.Play("biteAnimation");
+            }
+            else
+            {
+                anim.Play("stingAnimation");
+            }
+            
             //player should loose something but idk if it goes here
         }
         //if box collides with bullet twice, die, disappear
