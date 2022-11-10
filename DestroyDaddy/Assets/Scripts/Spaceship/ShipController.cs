@@ -13,6 +13,8 @@ public class ShipController : MonoBehaviour
     private bool thrustOn;
     public static float fuel;
 
+    private static GameObject lastPlanet;
+
     [SerializeField]
     ParticleSystem leftThrust;
     [SerializeField]
@@ -136,12 +138,11 @@ public class ShipController : MonoBehaviour
             Quaternion.LookRotation(targetDirection),
             Time.deltaTime * 0.6f
             );
-        }
-        
-        //rb.velocity = targetDirection.normalized * 0.5f;     //normalized prevents char moving faster than it should with diagonal input
+        }        
     }
 
     void OnTriggerEnter(Collider col) {
+        lastPlanet = col.gameObject;
         SceneManager.LoadScene(col.gameObject.name);
         SceneManager.UnloadSceneAsync("Space");
     }
