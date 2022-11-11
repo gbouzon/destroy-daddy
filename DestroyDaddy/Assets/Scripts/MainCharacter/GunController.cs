@@ -20,7 +20,7 @@ public class GunController : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera aim;
 
-    private LineRenderer laserLine;                 
+   // private LineRenderer laserLine;                 
 
     private float timer;
     // private AudioSource gunAudio;
@@ -29,7 +29,7 @@ public class GunController : MonoBehaviour
 
     void Start() {
     // Get and store a reference to our LineRenderer component
-        laserLine = GetComponent<LineRenderer>();
+        //laserLine = GetComponent<LineRenderer>();
     }
     void Awake(){
         animator = GetComponent<Animator>();
@@ -48,7 +48,7 @@ public class GunController : MonoBehaviour
             {  
                 mainCharacterScript.handleAimingAnimation();
                 timer = 0f; 
-                laserLine.enabled = true;
+             //   laserLine.enabled = true;
                 Shoot();
                
             }
@@ -58,7 +58,7 @@ public class GunController : MonoBehaviour
 
     void Shoot() {
         muzzleParticle.Play();
-        laserLine.SetPosition(0, firePoint.forward * 100);
+      //  laserLine.SetPosition(0, firePoint.forward * 100);
         RaycastHit hit;
         if(Physics.Raycast(firePoint.position, firePoint.forward * 100, out hit, range)){
             if(hit.collider.gameObject.tag == "Enemy"){

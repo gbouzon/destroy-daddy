@@ -240,9 +240,9 @@
                 {
                     "name": "",
                     "id": "f8965f79-a1df-43f9-b6a7-c91980d68d1b",
-                    "path": "<Mouse>/delta",
+                    "path": "<Pointer>/delta",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "InvertVector2(invertX=false),ScaleVector2(x=0.15,y=0.15)",
                     "groups": "",
                     "action": "Mouse",
                     "isComposite": false,
