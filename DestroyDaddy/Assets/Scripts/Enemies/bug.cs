@@ -25,9 +25,13 @@ public class bug : MonoBehaviour
         //going towards character
         transform.position = Vector3.Lerp(a, b, t);
         transform.LookAt(target);
+        if (Vector3.Distance(a, b) < 5)
+        {
+            anim.Play("stingAnimation");
+        }
     }
 
-    void OnCollisionEnter(Collision collision)
+    /*void OnCollisionEnter(Collision collision)
     {
         //if box collider collides with character, attack
         if(collision.gameObject.tag == "Player")
@@ -36,5 +40,10 @@ public class bug : MonoBehaviour
             //player should loose something but idk if it goes here
         }
         //if box collides with bullet twice, die, disappear
+    }*/
+
+    public void HitByRay()
+    {
+        Debug.Log("we got hit");
     }
 }

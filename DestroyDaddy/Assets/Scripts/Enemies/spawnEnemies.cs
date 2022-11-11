@@ -16,8 +16,8 @@ public class spawnEnemies : MonoBehaviour
     private GameObject dragonPrefab;
     private float respawnTime = 2.0f;
     private float respawnTimePlant = 5.0f;
-    private Vector3 location1 = new Vector3(800, 30, 420);
-    private Vector3 location2 = new Vector3(645, 40, 225);
+    private Vector3 location1 = new Vector3(800, 36, 420);
+    private Vector3 location2 = new Vector3(645, 45, 225);
     private Vector3 location3 = new Vector3(480, 25, 290);
     // Start is called before the first frame update
     void Start()
