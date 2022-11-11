@@ -17,6 +17,7 @@ public class MovementController : MonoBehaviour
     // rotation with Camera Variable
     [SerializeField]
     Camera followCamera;
+    public GameObject cinemachineCameraTarget;
     Vector2 mouseInput;
     float rotationVelocity;
     
@@ -29,6 +30,7 @@ public class MovementController : MonoBehaviour
     float walkSpeed = 2.0f;
     private float playerSpeed;
     float targetRotation;
+    private bool rotateOnMove = true;
     
 
     // if user input Bool
@@ -68,6 +70,7 @@ public class MovementController : MonoBehaviour
 
     void Awake(){
 
+        Cursor.lockState = CursorLockMode.Locked;
         // initially set reference variable
         playerInput = new PlayerInput();
         mainCharacterController = this.GetComponent<CharacterController>();
@@ -110,9 +113,8 @@ public class MovementController : MonoBehaviour
     }
 
     void LateUpdate(){
-        CameraRotation();
-   
-        
+       CameraRotation();
+  
     }
 
     //=================================================Handle functions for the playerInput CallBack==================================================================//
@@ -169,9 +171,11 @@ public class MovementController : MonoBehaviour
                 followCamera.transform.eulerAngles.y;
             float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity,
                      0.3f);
-
-            // rotate to face input direction relative to camera position
-            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);  
+            if(rotateOnMove){
+             // rotate to face input direction relative to camera position
+              transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f); 
+            }
+             
             Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
 
             //Add movement to the Character
@@ -185,7 +189,7 @@ public class MovementController : MonoBehaviour
     void CameraRotation()
         {
             // if there is an input 
-            if (mouseInput != Vector2.zero && currentMovement.x == 0.0f)
+            if (mouseInput.sqrMagnitude >= 0.01f)
             {
                 cinemachineTargetYaw += mouseInput.x ;
                 cinemachineTargetPitch += mouseInput.y ;
@@ -197,12 +201,11 @@ public class MovementController : MonoBehaviour
                 } else{
                     cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -0.0f, 1.0f);
                 }
+                
             }
             // Cinemachine will follow this target
-            this.transform.rotation = Quaternion.Euler(cinemachineTargetPitch + 0.0f,
+                cinemachineCameraTarget.transform.rotation = Quaternion.Euler(cinemachineTargetPitch + 0.0f,
                 cinemachineTargetYaw, 0.0f);
-
-            
         }    
 
      private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
@@ -280,7 +283,6 @@ public class MovementController : MonoBehaviour
         bool isWalking = animator.GetBool("isWalking");
         bool isRunning = animator.GetBool("isRunning");
         
-        Debug.Log(isMovementPressed && !isWalking);
         //start walking if movement pressed is true and not already walking
         if(isMovementPressed && !isWalking){
             animator.SetBool("isWalking", true);
@@ -333,5 +335,7 @@ public class MovementController : MonoBehaviour
         return isAimPressed;
     }
 
-    
+    public void setRotateOnMove(bool newRotateOnMove){
+        rotateOnMove = newRotateOnMove;
+    }
 }
