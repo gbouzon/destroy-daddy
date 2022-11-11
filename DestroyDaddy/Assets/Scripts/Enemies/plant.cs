@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class plant : MonoBehaviour
 {
-    public Transform target;
+    private Transform target;
     private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        target = player.GetComponent<Transform>();
         animator = GetComponent<Animator>();
     }
 
