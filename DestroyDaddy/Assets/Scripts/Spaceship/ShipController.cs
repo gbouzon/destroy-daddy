@@ -23,6 +23,8 @@ public class ShipController : MonoBehaviour
     ParticleSystem leftJet;
     [SerializeField]
     ParticleSystem rightJet;
+    [SerializeField]
+    ParticleSystem explosion;
 
     AudioSource audioSource;
 
@@ -32,7 +34,7 @@ public class ShipController : MonoBehaviour
         fuel = maxFuel;
         count = 0;
         thrustOn = false;
-        speed = 1000f;
+        speed = 10000f;
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -144,12 +146,22 @@ public class ShipController : MonoBehaviour
     void OnTriggerEnter(Collider col) {
         lastPlanet = col.gameObject;
         GameObject.Find("SpaceUI").SetActive(false);
-        if (col.gameObject.name == "SunObject")
-            Destroy(gameObject);
+        if (col.gameObject.name == "SunObject") {
+            EndThrust();
+            rb.drag = 1000;
+            explosion.Play();
+            explosion.GetComponent<AudioSource>().Play();
+            StartCoroutine(waiter());
+        }
         else {
             SceneManager.LoadScene(col.gameObject.name);
             SceneManager.UnloadSceneAsync("Space");
         }
+    }
+
+    IEnumerator waiter() {
+        yield return new WaitForSecondsRealtime(1.8f);
+        Destroy(gameObject);
     }
 }
 
