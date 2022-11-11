@@ -7,30 +7,30 @@ using TMPro;
 public class PlayerExperience : MonoBehaviour
 {
     private float health;
-    private float lerpTimer;
+    private float lerpTimer; // use to animate the health bar 
     public float maxHealth = 100;
-    public float chipSpped = 2f; // controll the delaided bar take to catch up to the other
-    public Image frontHealthBar;
-    public Image backHealthBar;
+    public float chipSpped = 2f; // control the delayed bar take to catch up to the other
+    public Image frontHealthBar; // the health bar that will be animated in front
+    public Image backHealthBar; // the health bar that will be animated in back
     public TextMeshProUGUI healthText;
     
     
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
+        health = maxHealth; 
     }
 
     // Update is called once per frame
     void Update()
     {
-        health = Mathf.Clamp(health, 0, maxHealth);
+        health = Mathf.Clamp(health, 0, maxHealth); // clamp health so its never below 0 
         UpdateHealthUI();
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K)) // remove damage from player using keyboard
         {
             TakeDamage(Random.Range(5,10));
         }
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.H)) // restore health to the player
         {
             RestoreHealth(Random.Range(5,10));
         }
@@ -39,47 +39,58 @@ public class PlayerExperience : MonoBehaviour
     public void UpdateHealthUI()
     {
         Debug.Log(health);
-        float fillFront = frontHealthBar.fillAmount;
-        float fillBack = backHealthBar.fillAmount;
-        float hFraction = health / maxHealth;
-        if (fillBack > hFraction)
+        float fillFront = frontHealthBar.fillAmount; // back health bar 
+        float fillBack = backHealthBar.fillAmount; // front health 
+        float hFraction = health / maxHealth; // fraction the value between 0 and 1
+        if (fillBack > hFraction) // check to see if damage was taken on the bar
         {
             frontHealthBar.fillAmount = hFraction;
             backHealthBar.color = Color.red;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpped;
-            percentComplete = percentComplete * percentComplete;
-            backHealthBar.fillAmount = Mathf.Lerp(fillBack, hFraction, percentComplete);
+            lerpTimer += Time.deltaTime; // increment lerptimer
+            float percentComplete = lerpTimer / chipSpped; // track the completion of the lerp
+            percentComplete = percentComplete * percentComplete; // animation look better
+            backHealthBar.fillAmount = Mathf.Lerp(fillBack, hFraction, percentComplete); // bar chasing the front bar
         }
 
-        if (fillFront < hFraction)
+        if (fillFront < hFraction) // check to see that the player gets new health
         {
             backHealthBar.color = Color.green;
             backHealthBar.fillAmount = hFraction;
             lerpTimer += Time.deltaTime;
             float percentComplete = lerpTimer / chipSpped;
-            percentComplete = percentComplete * percentComplete;
+            percentComplete = percentComplete * percentComplete; // animation look better
             frontHealthBar.fillAmount = Mathf.Lerp(fillFront, backHealthBar.fillAmount, percentComplete);
         }
 
-        healthText.text = Mathf.Round(health) + "/" + Mathf.Round(maxHealth);
+        healthText.text = Mathf.Round(health) + "/" + Mathf.Round(maxHealth); // update the text on the health bar
     }
 
+    /*
+     * Take damage method
+     * remove from player health
+     */
     public void TakeDamage(float damage)
     {
         health -= damage;
         lerpTimer = 0f;
     }
-
+    /*
+     * Restore health method
+     * add health to the player
+     */
     public void RestoreHealth(float healAmount)
     {
         health += healAmount;
         lerpTimer = 0f;
     }
-
+    /*
+     * increase player health based on their level
+     */
     public void IncreaseHealth(int level)
     {
+        // increase health based on level
         maxHealth += (health * 0.01f) * ((100 - level) * 0.1f);
+        // refill health bar
         health = maxHealth;
     }
 }

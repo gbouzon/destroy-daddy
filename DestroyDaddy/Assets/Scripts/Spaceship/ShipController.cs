@@ -32,7 +32,7 @@ public class ShipController : MonoBehaviour
         fuel = maxFuel;
         count = 0;
         thrustOn = false;
-        speed = 500f;
+        speed = 1000f;
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -143,8 +143,13 @@ public class ShipController : MonoBehaviour
 
     void OnTriggerEnter(Collider col) {
         lastPlanet = col.gameObject;
-        SceneManager.LoadScene(col.gameObject.name);
-        SceneManager.UnloadSceneAsync("Space");
+        GameObject.Find("SpaceUI").SetActive(false);
+        if (col.gameObject.name == "SunObject")
+            Destroy(gameObject);
+        else {
+            SceneManager.LoadScene(col.gameObject.name);
+            SceneManager.UnloadSceneAsync("Space");
+        }
     }
 }
 

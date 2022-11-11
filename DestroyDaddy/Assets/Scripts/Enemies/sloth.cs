@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class sloth : MonoBehaviour
 {
-    public Transform target;
-    private float t;
+    private Transform target;
     private Animator animator;
+    private float t;
     void Start()
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        target = player.GetComponent<Transform>();
         t = Random.Range(0.001f, 0.01f);
         animator = GetComponent<Animator>();
     }
@@ -22,7 +24,7 @@ public class sloth : MonoBehaviour
         }
         else
         {
-            transform.position = Vector3.Lerp(a, b, t);
+            transform.position = Vector3.Lerp(a, b, 0.001f);
             transform.LookAt(target);
         }
 

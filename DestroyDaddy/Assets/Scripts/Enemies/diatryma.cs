@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class diatryma : MonoBehaviour
 {
-    public Transform target;
-    public float t;
+    private Transform target;
     private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        target = player.GetComponent<Transform>();
         animator = GetComponent<Animator>();
     }
 
@@ -25,7 +26,7 @@ public class diatryma : MonoBehaviour
         }
         else
         {
-            transform.position = Vector3.Lerp(a, b, t);
+            transform.position = Vector3.Lerp(a, b, 0.01f);
         }
     }
 }

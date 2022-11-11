@@ -26,18 +26,20 @@ public class CameraBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
-        float mouseScroll = Input.GetAxis("Mouse ScrollWheel") * 8.0f;
+        if (target != null) {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+            float mouseScroll = Input.GetAxis("Mouse ScrollWheel") * 8.0f;
 
-        rotationY += mouseX;
-        rotationX += mouseY;
-        distanceFromTarget += mouseScroll;
+            rotationY += mouseX;
+            rotationX += mouseY;
+            distanceFromTarget += mouseScroll;
 
-        rotationX = Mathf.Clamp(rotationX, -60, 60);
-        distanceFromTarget = Mathf.Clamp(distanceFromTarget, 10, 35);
+            rotationX = Mathf.Clamp(rotationX, -60, 60);
+            distanceFromTarget = Mathf.Clamp(distanceFromTarget, 10, 35);
 
-        transform.localEulerAngles = new Vector3(rotationX * -1, rotationY, 0);
-        transform.position = target.position - transform.forward * distanceFromTarget;
+            transform.localEulerAngles = new Vector3(rotationX * -1, rotationY, 0);
+            transform.position = target.position - transform.forward * distanceFromTarget;
+        }
     }
 }
