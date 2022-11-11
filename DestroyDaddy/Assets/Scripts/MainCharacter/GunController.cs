@@ -18,41 +18,69 @@ public class GunController : MonoBehaviour
     private CinemachineVirtualCamera normal;
     
     [SerializeField]
-    private CinemachineVirtualCamera aim;
+    private  CinemachineVirtualCamera  aimCamera; 
 
-   // private LineRenderer laserLine;                 
+   // private LineRenderer laserLine;    
+    [SerializeField]
+    private LayerMask aimColliderLayerMask = new LayerMask();
+    [SerializeField]
+    private Transform debugTranfrom;
+
+
+
+         
 
     private float timer;
     // private AudioSource gunAudio;
     Animator animator;
-    AnimationAndMovementController mainCharacterScript; 
+    MovementController mainCharacterScript;
+    PlayerInput playerInput; 
+ 
 
     void Start() {
+
     // Get and store a reference to our LineRenderer component
         //laserLine = GetComponent<LineRenderer>();
+
     }
     void Awake(){
         animator = GetComponent<Animator>();
-        mainCharacterScript =  GameObject.Find("MainCharacter").GetComponent<AnimationAndMovementController>();
+        mainCharacterScript =  GameObject.Find("MainCharacter").GetComponent<MovementController>();
        
     }
+
+    
 
     // Update is called once per frame
     void Update()
     {
-        bool isAiming = animator.GetBool("isAiming");
-        
-        timer += Time.deltaTime;
-        if(timer >= fireRate){
-            if (Input.GetButtonDown("Fire1"))
-            {  
-                mainCharacterScript.handleAimingAnimation();
-                timer = 0f; 
-             //   laserLine.enabled = true;
-                Shoot();
-               
-            }
+
+        if(mainCharacterScript.getIsAim()){
+            aimCamera.gameObject.SetActive(true);
+        }else{
+            aimCamera.gameObject.SetActive(false);
         }
+
+
+        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+        if(Physics.Raycast(ray, out RaycastHit raycashHit, 999f, aimColliderLayerMask)) 
+            debugTranfrom.position = raycashHit.point;
+  
+       // bool isAiming = animator.GetBool("isAiming");
+        
+        // timer += Time.deltaTime;
+        // if(timer >= fireRate){
+        //     if (Input.GetButtonDown("Fire1"))
+        //     {  
+        //         //mainCharacterScript.handleAimingAnimation();
+        //         timer = 0f; 
+        //      //   laserLine.enabled = true;
+               
+        //         Shoot();
+               
+        //     }
+        // }
         
     }
 
@@ -76,6 +104,8 @@ public class GunController : MonoBehaviour
         Debug.DrawRay(firePoint.position, firePoint.forward * 100, Color.yellow, range);
     
     }
+
+   
 
 
         // gunAudio.Play();

@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 using UnityEngine.SceneManagement;
 
 
-public class AnimationAndMovementController : MonoBehaviour
+public class MovementController : MonoBehaviour
 {
     private CharacterController mainCharacterController;
     Animator animator;
@@ -21,11 +22,13 @@ public class AnimationAndMovementController : MonoBehaviour
     
     
     
+    
     // Movement variable  
     private Vector2 movementInput;
     float runSpeed = 5.0f;
     float walkSpeed = 2.0f;
     private float playerSpeed;
+    float targetRotation;
     
 
     // if user input Bool
@@ -40,6 +43,7 @@ public class AnimationAndMovementController : MonoBehaviour
     // cinemachine
     private float cinemachineTargetYaw;
     private float cinemachineTargetPitch;
+      
 
 
     // gravity variable 
@@ -49,8 +53,9 @@ public class AnimationAndMovementController : MonoBehaviour
     // jumping variable
     bool isJumpAnimating;
     float initialJumpVelocity;
-    float maxJumpHeight = 1.5f;
-    float maxJumpTime = 0.75f;
+    float maxJumpHeight = 2.0f;
+    float maxJumpTime = 0.57f;
+    float fallMultiplier = 3.0f;
     bool isJumping = false;
     private float verticalVelocity;
 
@@ -96,6 +101,7 @@ public class AnimationAndMovementController : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
+        
         move();
         handleMovementAnimation();
         handleAimingAnimation();
@@ -105,6 +111,8 @@ public class AnimationAndMovementController : MonoBehaviour
 
     void LateUpdate(){
         CameraRotation();
+   
+        
     }
 
     //=================================================Handle functions for the playerInput CallBack==================================================================//
@@ -153,41 +161,48 @@ public class AnimationAndMovementController : MonoBehaviour
 
 
     void move(){
-        playerSpeed = !isRunPressed ? 2.0f : 5.0f;
+        playerSpeed = !isRunPressed ? walkSpeed :runSpeed;
         
 
         if(isMovementPressed){
-            float targetRotation = Mathf.Atan2(currentMovement.x, currentMovement.z) * Mathf.Rad2Deg +
+            targetRotation = Mathf.Atan2(currentMovement.x, currentMovement.z) * Mathf.Rad2Deg +
                 followCamera.transform.eulerAngles.y;
             float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity,
                      0.3f);
 
             // rotate to face input direction relative to camera position
-            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);  
             Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
 
             //Add movement to the Character
             mainCharacterController.Move(targetDirection.normalized * (playerSpeed * Time.deltaTime) +
-                            new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime); 
-          }
+                            new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime);
+        }
     }
+
+        
 
     void CameraRotation()
         {
             // if there is an input 
-            if (mouseInput != Vector2.zero)
+            if (mouseInput != Vector2.zero && currentMovement.x == 0.0f)
             {
                 cinemachineTargetYaw += mouseInput.x ;
                 cinemachineTargetPitch += mouseInput.y ;
+
+                // clamp our rotations so our values are limited 360 degrees
+                cinemachineTargetYaw = ClampAngle(cinemachineTargetYaw, float.MinValue, float.MaxValue);
+                if(isAimPressed){
+                    cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -40.0f, 50.0f);
+                } else{
+                    cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -0.0f, 1.0f);
+                }
             }
-
-            // clamp our rotations so our values are limited 360 degrees
-            cinemachineTargetYaw = ClampAngle(cinemachineTargetYaw, float.MinValue, float.MaxValue);
-            cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -0.0f, 1.0f);
-
             // Cinemachine will follow this target
             this.transform.rotation = Quaternion.Euler(cinemachineTargetPitch + 0.0f,
                 cinemachineTargetYaw, 0.0f);
+
+            
         }    
 
      private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
@@ -234,7 +249,7 @@ public class AnimationAndMovementController : MonoBehaviour
 
     void handleGravity(){
         bool isFalling = currentMovement.y <= 0.0f || !isJumpPressed;
-        float fallMultiplier = 2.0f;
+        
         //apply proper gravity if the player is grounded or not
         if(mainCharacterController.isGrounded){
             if(isJumpAnimating){
@@ -292,6 +307,7 @@ public class AnimationAndMovementController : MonoBehaviour
          if(isAimPressed || isFirePressed){
             animator.SetBool("isAiming", true);
             
+            
             //set AimeState to idle if run and movement press is false and is not already running or walking
             if(!isRunPressed && !isMovementPressed && !isWalking && !isRunning){
                 animator.SetInteger("AimState", idleState);
@@ -308,7 +324,14 @@ public class AnimationAndMovementController : MonoBehaviour
         } else if ((!isAimPressed && isAiming) || isFirePressed){
             animator.SetBool("isAiming", false);
             animator.SetInteger("AimState", nullState);
+            
         }
     }    
+//==================================================GET and SET methods======================================================//
 
+    public bool getIsAim(){
+        return isAimPressed;
+    }
+
+    
 }
