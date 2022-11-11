@@ -64,21 +64,23 @@ public class GunController : MonoBehaviour
          timer += Time.deltaTime;
          if(timer >= fireRate){
             if (Input.GetMouseButton(0))
-            {  
+            {
                 // to-do
                 /**
                 if(tranform.postion.y != mouseWorlfPostion){
                     turn to the TargetPostion
                 }
-                */    
+                */
 
-
-                timer = 0f; 
+                timer = 0f;
                 if(hit.collider.gameObject.tag == "Enemy"){
-                    var enemy = hit.collider.GetComponent<EnemyHealth>();
+                    //the send message method can't find the receiver of the message 
+                    //muzzle.SendMessage("HitByRay");
+                    /*var enemy = hit.collider.GetComponent<EnemyHealth>();
                     Debug.Log("Hit enemy: " + hit.transform.name);
                     enemy.TakeDamage(damage);
-                    Debug.Log(hit.transform.name + " health: " + enemy.currentHealth);
+                    hit.transform.SendMessage("HitByRay");
+                    Debug.Log(hit.transform.name + " health: " + enemy.currentHealth);*/
                 }
 
                 Vector3 aimDir = (targetPosition - firePoint.position).normalized;

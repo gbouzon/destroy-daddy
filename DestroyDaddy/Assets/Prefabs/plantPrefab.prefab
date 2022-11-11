@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 1232326860}
   m_Layer: 0
   m_Name: plantPrefab
-  m_TagString: enemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

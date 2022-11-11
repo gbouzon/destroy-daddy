@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1716588134590525278}
   m_Layer: 0
   m_Name: leg12Collider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 8652100379491495610}
   m_Layer: 0
   m_Name: bodyCollider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 8596392479941105927}
   m_Layer: 0
   m_Name: leg11Collider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 878122636216101862}
   m_Layer: 0
   m_Name: leg21Collider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2369,7 +2369,7 @@ GameObject:
   - component: {fileID: 9076576116775026828}
   m_Layer: 0
   m_Name: leg22Collider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2415,7 +2415,7 @@ GameObject:
   - component: {fileID: 785236224943824099}
   m_Layer: 0
   m_Name: bugPrefab
-  m_TagString: enemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
