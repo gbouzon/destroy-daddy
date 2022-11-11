@@ -20,13 +20,13 @@ public class AnimationAndMovementController : MonoBehaviour
     float rotationVelocity;
     
     
- 
-    private Vector2 movementInput;
     
-    const float _threshold = 0.01f; 
-
-    float runMultiplier = 3.0f;
+    // Movement variable  
+    private Vector2 movementInput;
+    float runSpeed = 5.0f;
+    float walkSpeed = 2.0f;
     private float playerSpeed;
+    
 
     // if user input Bool
     bool isMovementPressed;
@@ -43,7 +43,7 @@ public class AnimationAndMovementController : MonoBehaviour
 
 
     // gravity variable 
-    float gravity = -9.8f;
+    float gravity = -9.8f; 
     float groundedGravity = -.05f;
 
     // jumping variable
@@ -96,13 +96,15 @@ public class AnimationAndMovementController : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        CameraRotation();  
-        handleGravity();
-        handleJump();
         move();
         handleMovementAnimation();
         handleAimingAnimation();
-        
+        handleGravity();
+        handleJump();
+    }
+
+    void LateUpdate(){
+        CameraRotation();
     }
 
     //=================================================Handle functions for the playerInput CallBack==================================================================//
@@ -147,44 +149,41 @@ public class AnimationAndMovementController : MonoBehaviour
         // disable the charater controls action map
         playerInput.MainCharacterControls.Disable();
     }
-//============================================================Handle Rotation==================================================================//    
+//============================================================Handle Movement==================================================================//    
 
 
     void move(){
         playerSpeed = !isRunPressed ? 2.0f : 5.0f;
+        
+
         if(isMovementPressed){
             float targetRotation = Mathf.Atan2(currentMovement.x, currentMovement.z) * Mathf.Rad2Deg +
-                                  followCamera.transform.eulerAngles.y;
+                followCamera.transform.eulerAngles.y;
             float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity,
-                    0.12f);
-            // rotate to face input direction relative to camera position
-            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f); 
+                     0.3f);
 
-            //move forward base on the targetRotation
+            // rotate to face input direction relative to camera position
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
-            
-            // Add movement to the Character
+
+            //Add movement to the Character
             mainCharacterController.Move(targetDirection.normalized * (playerSpeed * Time.deltaTime) +
-                             new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime); 
+                            new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime); 
           }
-         
     }
 
     void CameraRotation()
         {
-            // if there is an input and camera position is not fixed
-            if (mouseInput.sqrMagnitude >= _threshold)
+            // if there is an input 
+            if (mouseInput != Vector2.zero)
             {
-                //Don't multiply mouse input by Time.deltaTime;
-                float deltaTimeMultiplier = isMouseMove ? 1.0f : Time.deltaTime;
-
-                cinemachineTargetYaw += mouseInput.x * deltaTimeMultiplier;
-                cinemachineTargetPitch += mouseInput.y * deltaTimeMultiplier;
+                cinemachineTargetYaw += mouseInput.x ;
+                cinemachineTargetPitch += mouseInput.y ;
             }
 
             // clamp our rotations so our values are limited 360 degrees
             cinemachineTargetYaw = ClampAngle(cinemachineTargetYaw, float.MinValue, float.MaxValue);
-            cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -0.0f, 0.0f);
+            cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -0.0f, 1.0f);
 
             // Cinemachine will follow this target
             this.transform.rotation = Quaternion.Euler(cinemachineTargetPitch + 0.0f,
@@ -212,8 +211,6 @@ public class AnimationAndMovementController : MonoBehaviour
         if(!isJumping && mainCharacterController.isGrounded && isJumpPressed){
             isJumpAnimating = true;
             animator.SetBool("isJumping", true);
-            Debug.Log(animator.GetBool("isJumping"));
-            
             
             if(!isRunPressed && !isMovementPressed){
                 animator.SetInteger("JumpState", idleState);
@@ -227,7 +224,7 @@ public class AnimationAndMovementController : MonoBehaviour
             
             isJumping = true;
             verticalVelocity = initialJumpVelocity;
-            currentMovement.y = initialJumpVelocity ;
+            currentMovement.y = initialJumpVelocity;
         } else if(!isJumpPressed && isJumping && mainCharacterController.isGrounded){
             isJumping = false;
             isJumpAnimating = false;
