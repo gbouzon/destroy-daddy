@@ -86,7 +86,9 @@ public class GunController : MonoBehaviour
 
                 timer = 0f;
                 if(hit.collider.gameObject.tag == "Enemy"){
-                    //the send message method can't find the receiver of the message 
+                    //the send message method can't find the receiver of the message
+                    GameObject enemyPre = GameObject.FindWithTag("enemyPrefab");
+                    enemyPre.SendMessage("HitByRay");
                     //muzzle.SendMessage("HitByRay");
                     /*var enemy = hit.collider.GetComponent<EnemyHealth>();
                     Debug.Log("Hit enemy: " + hit.transform.name);

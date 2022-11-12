@@ -7,6 +7,8 @@ public class bug : MonoBehaviour
     private Transform target;
     private float t;
     private Animator anim;
+    private int maxHealth = 2;
+    private int currentHealth;
     void Start()
     {
         //make every time a different speed for funzies
@@ -16,6 +18,7 @@ public class bug : MonoBehaviour
         target = player.GetComponent<Transform>();
         //getting animator
         anim = GetComponent<Animator>();
+        currentHealth = maxHealth;
     }
     void Update()
     {
@@ -25,25 +28,18 @@ public class bug : MonoBehaviour
         //going towards character
         transform.position = Vector3.Lerp(a, b, t);
         transform.LookAt(target);
-        if (Vector3.Distance(a, b) < 5)
+        if (Vector3.Distance(a, b) < 2)
         {
             anim.Play("stingAnimation");
         }
     }
-
-    /*void OnCollisionEnter(Collision collision)
-    {
-        //if box collider collides with character, attack
-        if(collision.gameObject.tag == "Player")
-        {
-            anim.Play("biteAnimation");
-            //player should loose something but idk if it goes here
-        }
-        //if box collides with bullet twice, die, disappear
-    }*/
-
     public void HitByRay()
     {
-        Debug.Log("we got hit");
+        currentHealth--;
+        if (currentHealth <= 0)
+        {
+            anim.Play("dieAnimation");
+            Destroy(gameObject, 1);
+        }
     }
 }
