@@ -5,38 +5,20 @@ using UnityEngine;
 public class spawnEnemies : MonoBehaviour
 {
     [SerializeField]
-    private GameObject bugPrefab;
-    [SerializeField]
-    private GameObject plantPrefab;
-    [SerializeField]
-    private GameObject diatrymaPrefab;
-    [SerializeField]
-    private GameObject slothPrefab;
-    [SerializeField]
-    private GameObject dragonPrefab;
+    private GameObject enemyPrefab;
     private float respawnTime = 2.0f;
-    private float respawnTimePlant = 5.0f;
     private Vector3 location1 = new Vector3(800, 36, 420);
-    private Vector3 location2 = new Vector3(645, 45, 225);
-    private Vector3 location3 = new Vector3(480, 25, 290);
+    private Vector3 location2 = new Vector3(902, 89, 462);
     // Start is called before the first frame update
     void Start()
     {
-        //bugPrefab = GameObject.FindWithTag("bugPrefab");
-
         StartCoroutine(enemyWave());
-        StartCoroutine(plantWave());
-        //bugPrefab.tag = "Enemy";
-        //bugPrefab.AddComponent<EnemyHealth>();
     }
 
     private void spawnEnemy()
     {
-        GameObject bug = Instantiate(bugPrefab) as GameObject;
-        /*GameObject diatryma = Instantiate(diatrymaPrefab) as GameObject;
-        GameObject sloth = Instantiate(slothPrefab) as GameObject;
-        GameObject dragon = Instantiate(dragonPrefab) as GameObject;*/
-        int spawnLocation = Random.Range(0, 3);
+        GameObject bug = Instantiate(enemyPrefab) as GameObject;
+        int spawnLocation = Random.Range(0, 2);
         switch (spawnLocation)
         {
             case (0):
@@ -45,13 +27,10 @@ public class spawnEnemies : MonoBehaviour
             case (1):
                 bug.transform.position = location2;
                 break;
-            case (2):
-                bug.transform.position = location3;
-                break;
         }
     }
 
-    private void spawnPlantMonster()
+    /*private void spawnPlantMonster()
     {
         GameObject plant = Instantiate(plantPrefab) as GameObject;
         GameObject player = GameObject.FindWithTag("Player");
@@ -59,21 +38,13 @@ public class spawnEnemies : MonoBehaviour
         //place plant monster near main character
         Vector3 newPlantPosition = new Vector3(target.position.x-5, target.position.y+5, target.position.z-5);
         plant.transform.position = newPlantPosition;
-    }
+    }*/
     IEnumerator enemyWave()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 5; i++)
         {
             yield return new WaitForSeconds(respawnTime);
             spawnEnemy();
-        }
-    }
-    IEnumerator plantWave()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            yield return new WaitForSeconds(respawnTimePlant);
-            spawnPlantMonster();
         }
     }
 }

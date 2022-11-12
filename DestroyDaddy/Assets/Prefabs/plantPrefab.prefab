@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 491669885}
   m_Layer: 0
   m_Name: faceCollider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 1339575766}
   m_Layer: 0
   m_Name: feetCollider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 1232326860}
   m_Layer: 0
   m_Name: plantPrefab
-  m_TagString: Enemy
+  m_TagString: enemyPrefab
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

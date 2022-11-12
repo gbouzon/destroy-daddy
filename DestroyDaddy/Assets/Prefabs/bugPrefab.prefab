@@ -2415,7 +2415,7 @@ GameObject:
   - component: {fileID: 785236224943824099}
   m_Layer: 0
   m_Name: bugPrefab
-  m_TagString: Enemy
+  m_TagString: enemyPrefab
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
