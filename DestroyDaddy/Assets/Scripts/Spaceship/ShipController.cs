@@ -26,7 +26,8 @@ public class ShipController : MonoBehaviour
     [SerializeField]
     ParticleSystem explosion;
 
-    AudioSource audioSource;
+    AudioSource thrustSource;
+    AudioSource jetSource;
 
     void Start()
     {
@@ -36,7 +37,8 @@ public class ShipController : MonoBehaviour
         thrustOn = false;
         speed = 10000f;
         rb = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
+        thrustSource = GetComponent<AudioSource>();
+        jetSource = leftJet.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -93,37 +95,44 @@ public class ShipController : MonoBehaviour
         thrustOn = true;
         leftThrust.Play();
         rightThrust.Play();
-        audioSource.Play();
+        thrustSource.Play();
     }
 
     void EndThrust() {
         thrustOn = false;
         leftThrust.Stop();
         rightThrust.Stop();
-        audioSource.Stop();
+        thrustSource.Stop();
     }
 
     void BothJets() {
         leftJet.Play();
         rightJet.Play();
+        if (!jetSource.isPlaying)
+            jetSource.Play();
         fuel -= 0.002f;
     }
 
     void LeftJet() {
         leftJet.Play();
         rightJet.Stop();
+        if (!jetSource.isPlaying)
+            jetSource.Play();
         fuel -= 0.002f;
     }
 
     void RightJet() {
         rightJet.Play();
         leftJet.Stop();
+        if (!jetSource.isPlaying)
+            jetSource.Play();
         fuel -= 0.002f;
     }
 
     void StopJets() {
         leftJet.Stop();
         rightJet.Stop();
+        jetSource.Stop();
     }
 
     public void MoveInDirectionOfInput() {
