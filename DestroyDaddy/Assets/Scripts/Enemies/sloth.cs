@@ -21,9 +21,9 @@ public class sloth : MonoBehaviour
     {
         Vector3 a = transform.position;
         Vector3 b = target.position;
-        if (Vector3.Distance(a, b) < 5)
+        if (Vector3.Distance(a, b) < 2)
         {
-            animator.Play("groundsmackAnimation");
+            animator.Play("biteAnimation");
         }
         else
         {
