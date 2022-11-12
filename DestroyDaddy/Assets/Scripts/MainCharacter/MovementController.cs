@@ -196,11 +196,11 @@ public class MovementController : MonoBehaviour
 
                 // clamp our rotations so our values are limited 360 degrees
                 cinemachineTargetYaw = ClampAngle(cinemachineTargetYaw, float.MinValue, float.MaxValue);
-                if(isAimPressed){
+              //  if(isAimPressed){
                     cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -40.0f, 50.0f);
-                } else{
-                    cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -0.0f, 1.0f);
-                }
+              //  } else{
+                   // cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -0.0f, 1.0f);
+               // }
                 
             }
             // Cinemachine will follow this target
