@@ -22,9 +22,9 @@ public class dragon : MonoBehaviour
     {
         Vector3 a = transform.position;
         Vector3 b = target.position;
-        transform.position = Vector3.Lerp(a, b, 0.001f);
+        transform.position = Vector3.Lerp(a, b, 0.01f);
         transform.LookAt(target);
-        if (Vector3.Distance(a, b) < 3)
+        if (Vector3.Distance(a, b) < 2)
         {
             animator.Play("armSwipeAnimation");
         }
