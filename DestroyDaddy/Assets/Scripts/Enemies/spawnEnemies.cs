@@ -6,9 +6,9 @@ public class spawnEnemies : MonoBehaviour
 {
     [SerializeField]
     private GameObject enemyPrefab;
-    private int enemyAmount = 5;
-    private float respawnTime = 5.0f;
-    private Vector3 location1 = new Vector3(800, 36, 420);
+    private int enemyAmount = 15;
+    private float respawnTime;
+    private Vector3 location1 = new Vector3(821, 30, 420);
     private Vector3 location2 = new Vector3(902, 89, 462);
     // Start is called before the first frame update
     void Start()
@@ -32,6 +32,7 @@ public class spawnEnemies : MonoBehaviour
     }
     IEnumerator enemyWave()
     {
+        respawnTime = Random.Range(2.0f, 15.0f);
         for (int i = 0; i < enemyAmount; i++)
         {
             yield return new WaitForSeconds(respawnTime);

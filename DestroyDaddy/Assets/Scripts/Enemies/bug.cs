@@ -9,12 +9,13 @@ public class bug : MonoBehaviour
     private Animator anim;
     private int maxHealth = 2;
     private int currentHealth;
+    GameObject player;
     void Start()
     {
         //make every time a different speed for funzies
         t = Random.Range(0.001f, 0.01f);
         //initating target as the main character
-        GameObject player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player");
         target = player.GetComponent<Transform>();
         //getting animator
         anim = GetComponent<Animator>();
@@ -26,11 +27,16 @@ public class bug : MonoBehaviour
         Vector3 a = transform.position;
         Vector3 b = target.position;
         //going towards character
-        transform.position = Vector3.Lerp(a, b, t);
-        transform.LookAt(target);
+        
         if (Vector3.Distance(a, b) < 2)
         {
             anim.Play("stingAnimation");
+            player.GetComponent<PlayerExperience>().TakeDamage(0.05f);
+            
+        }
+        else {
+            transform.position = Vector3.Lerp(a, b, t);
+            transform.LookAt(target);
         }
     }
     public void HitByRay()
@@ -40,6 +46,7 @@ public class bug : MonoBehaviour
         {
             anim.Play("dieAnimation");
             Destroy(gameObject, 1);
+            player.GetComponent<XPBar>().GainExperienceFlatRate(5);
         }
     }
 }

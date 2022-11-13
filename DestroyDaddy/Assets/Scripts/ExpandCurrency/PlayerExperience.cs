@@ -13,27 +13,38 @@ public class PlayerExperience : MonoBehaviour
     public Image frontHealthBar; // the health bar that will be animated in front
     public Image backHealthBar; // the health bar that will be animated in back
     public TextMeshProUGUI healthText;
+    Transform target;
+    GameObject enemy;
     
     
     // Start is called before the first frame update
     void Start()
     {
+        GameObject enemy = GameObject.FindWithTag("enemyPrefab");
         health = maxHealth; 
+        target = enemy.GetComponent<Transform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        health = Mathf.Clamp(health, 0, maxHealth); // clamp health so its never below 0 
+        // enemy = GameObject.FindWithTag("enemyPrefab");
+        // target = enemy.GetComponent<Transform>();
+        // //character and enemy position
+        // Vector3 a = transform.position;
+        // Vector3 b = target.position;
+        // Debug.Log(Vector3.Distance(a,b));
+        // if (Vector3.Distance(a, b) < 1)
+        // {
+        //     //TakeDamage(1);
+        //     UpdateHealthUI();
+        //     health = Mathf.Clamp(health, 0, maxHealth);
+        // }
+         // clamp health so its never below 0 
         UpdateHealthUI();
-        if (Input.GetKeyDown(KeyCode.K)) // remove damage from player using keyboard
-        {
-            TakeDamage(Random.Range(5,10));
-        }
-        if (Input.GetKeyDown(KeyCode.H)) // restore health to the player
-        {
-            RestoreHealth(Random.Range(5,10));
-        }
+        health = Mathf.Clamp(health, 0, maxHealth);
+        
+
     }
 
     public void UpdateHealthUI()

@@ -39,10 +39,9 @@ public class XPBar : MonoBehaviour
     void Update()
     {
         UpdateXPUI();
-        if (Input.GetKeyDown(KeyCode.Equals)) // increment amount of experiencegained
-        {
-            GainExperienceFlatRate(20);
-        }
+        
+        //GainExperienceFlatRate(20);
+        
 
         if (currentXP > requiredXP) // check to see when the player needs to level up
         {
