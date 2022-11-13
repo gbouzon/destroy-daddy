@@ -12,13 +12,13 @@ public class ShopCollision : MonoBehaviour
     [SerializeField]
     GameObject gunCrossHair;
     void OnTriggerEnter(Collider col) {
-        if(col.gameObject.name == "Shop"){
+        if(col.gameObject.name == "Shop" || col.gameObject.name == "FuelRecharge"){
             enterShopCanvas.SetActive(true);
         }
     }
 
     void OnTriggerStay(Collider col) {
-        if(col.gameObject.name == "Shop"){
+        if(col.gameObject.name == "Shop" || col.gameObject.name == "FuelRecharge"){
             if (Input.GetKey(KeyCode.F)) {
                 shopCanvas.SetActive(true);
                 Cursor.visible = true;
@@ -34,7 +34,7 @@ public class ShopCollision : MonoBehaviour
     }
 
     void OnTriggerExit(Collider col) {
-        if(col.gameObject.name == "Shop"){
+        if(col.gameObject.name == "Shop" || col.gameObject.name == "FuelRecharge"){
             enterShopCanvas.SetActive(false);
         }
     }
