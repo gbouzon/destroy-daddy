@@ -8,6 +8,7 @@ public class diatryma : MonoBehaviour
     private Animator animator;
     private int maxHealth = 2;
     private int currentHealth;
+    GameObject player;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,7 @@ public class diatryma : MonoBehaviour
         if (Vector3.Distance(a,b) < 5)
         {
             animator.Play("biteAnimation");
+            player.GetComponent<PlayerExperience>().TakeDamage(0.15f);
         }
         else
         {
@@ -40,6 +42,7 @@ public class diatryma : MonoBehaviour
         {
             animator.Play("dieAnimation");
             Destroy(gameObject, 1);
+            player.GetComponent<XPBar>().GainExperienceFlatRate(15);
         }
     }
 }
