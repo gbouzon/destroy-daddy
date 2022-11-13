@@ -6,12 +6,13 @@ public class plant : MonoBehaviour
 {
     private Transform target;
     private Animator animator;
-    private int maxHealth = 2;
+    private int maxHealth = 4;
     private int currentHealth;
+    GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player");
         target = player.GetComponent<Transform>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
@@ -35,7 +36,7 @@ public class plant : MonoBehaviour
         if (Vector3.Distance(a, b) < 2)
         {
             animator.Play("biteAnimation");
-
+            player.GetComponent<PlayerExperience>().TakeDamage(0.1f);
         }
     }
     public void HitByRay()
@@ -45,6 +46,7 @@ public class plant : MonoBehaviour
         {
             animator.Play("dieAnimation");
             Destroy(gameObject, 1);
+            player.GetComponent<XPBar>().GainExperienceFlatRate(10);
         }
     }
 }

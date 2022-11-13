@@ -8,6 +8,7 @@ public class spawnEnemies : MonoBehaviour
     private GameObject enemyPrefab;
     private int enemyAmount = 15;
     private float respawnTime;
+    // randomize this, make spawn points for each terrain
     private Vector3 location1 = new Vector3(821, 30, 420);
     private Vector3 location2 = new Vector3(902, 89, 462);
     // Start is called before the first frame update
