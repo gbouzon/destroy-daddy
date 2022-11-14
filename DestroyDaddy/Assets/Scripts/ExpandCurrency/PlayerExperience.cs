@@ -6,7 +6,7 @@ using TMPro;
 
 public class PlayerExperience : MonoBehaviour
 {
-    private float health;
+    private static float health;
     private float lerpTimer; // use to animate the health bar 
     public float maxHealth = 100;
     public float chipSpped = 2f; // control the delayed bar take to catch up to the other

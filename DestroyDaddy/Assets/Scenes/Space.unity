@@ -26111,7 +26111,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: d8b6d46da38c35149ae3ac17e2498143, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.05
-  m_Pitch: -1.5
+  m_Pitch: -2.3
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -26202,7 +26202,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064696123}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 1
   m_AngularDrag: 1
   m_UseGravity: 0

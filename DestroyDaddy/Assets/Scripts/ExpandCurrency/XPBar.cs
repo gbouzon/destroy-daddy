@@ -6,9 +6,9 @@ using UnityEngine.UI;
 using TMPro;
 public class XPBar : MonoBehaviour
 {
-    public int level;
-    public float currentXP;
-    public float requiredXP;
+    public static int level;
+    public static float currentXP;
+    public static float requiredXP;
     private float lerpTimer;
     private float delayTimer;
 
