@@ -5186,7 +5186,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.65
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &238712523
 MonoBehaviour:
@@ -15069,7 +15069,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.65
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &595228071
 MeshRenderer:
@@ -15288,7 +15288,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.55
+  m_Radius: 0.65
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &750649876
 MeshRenderer:
@@ -20797,7 +20797,7 @@ AudioSource:
   Priority: 241
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10.432495
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -25980,7 +25980,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 34.087524
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -26118,8 +26118,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 256
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 0.9588623
+  MaxDistance: 9.257202
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -26202,7 +26202,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064696123}
   serializedVersion: 2
-  m_Mass: 1000
+  m_Mass: 1
   m_Drag: 1
   m_AngularDrag: 1
   m_UseGravity: 0
@@ -26221,7 +26221,6 @@ GameObject:
   - component: {fileID: 1114511849}
   - component: {fileID: 1114511852}
   - component: {fileID: 1114511851}
-  - component: {fileID: 1114511850}
   m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
@@ -26243,19 +26242,6 @@ Transform:
   m_Father: {fileID: 1064696126}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1114511850
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114511848}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1114511851
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -26613,7 +26599,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.65
+  m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1370982484 stripped
 Transform:
@@ -36907,32 +36893,32 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 64516ced4caaafe42a5a3119a6ee8167,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -66
+      value: 1284
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64516ced4caaafe42a5a3119a6ee8167,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1074
+      value: 1443
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64516ced4caaafe42a5a3119a6ee8167,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 149
+      value: 203
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64516ced4caaafe42a5a3119a6ee8167,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.12036029
+      value: -0.17170551
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64516ced4caaafe42a5a3119a6ee8167,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64516ced4caaafe42a5a3119a6ee8167,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.99273026
+      value: 0.9851483
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64516ced4caaafe42a5a3119a6ee8167,
         type: 3}
@@ -36947,7 +36933,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 64516ced4caaafe42a5a3119a6ee8167,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 166.174
+      value: 199.774
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64516ced4caaafe42a5a3119a6ee8167,
         type: 3}

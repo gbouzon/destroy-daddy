@@ -7,13 +7,24 @@ public class ShipController : MonoBehaviour
 {
 
     Rigidbody rb;
-    float speed;
+    public static float speed = 1000f;
     public static float maxFuel = 1000f;
     private int count;
     private bool thrustOn;
     public static float fuel;
+    private static int startCount = 0;
 
-    private static GameObject lastPlanet;
+    private static string lastPlanet;
+
+    private static Dictionary<string, Vector3[]> planetPositions = new Dictionary<string, Vector3[]> {
+        {"Earth", new Vector3[] {new Vector3(-66f, 1074f, 149f), new Vector3(0, 166.174f, 0)}},
+        {"Moon", new Vector3[] {new Vector3(1394f, 1443f, 508.6f), new Vector3(0, 199.774f, 0)}},
+        {"Planet1", new Vector3[] {new Vector3(3970f, 157.9f, 335.2f), new Vector3(0, 261.289f, 0)}},
+        {"Planet2", new Vector3[] {new Vector3(1165.8f, 2364.5f, -4775.4f), new Vector3(0, 352.994f, 0)}},
+        {"Planet3", new Vector3[] {new Vector3(6790f, 364.5f, 5856f), new Vector3(0, 547.437f, 0)}},
+        {"Planet4", new Vector3[] {new Vector3(-3754.5f, 2206.5f, -8481.3f), new Vector3(-15.359f, 724.954f, 0)}},
+        {"Planet5", new Vector3[] {new Vector3(-8366.3f, -3915f, 8606.7f), new Vector3(-19.14f, 564.746f, 0.576f)}},
+    };
 
     [SerializeField]
     ParticleSystem leftThrust;
@@ -32,10 +43,15 @@ public class ShipController : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 30;
-        fuel = maxFuel;
+        if (startCount == 0)
+        {
+            lastPlanet = GameObject.Find("Earth").gameObject.name;
+            fuel = maxFuel;
+            startCount++;
+        }
+        LoadPosition();
         count = 0;
         thrustOn = false;
-        speed = 100000f;
         rb = GetComponent<Rigidbody>();
         thrustSource = GetComponent<AudioSource>();
         jetSource = leftJet.GetComponent<AudioSource>();
@@ -72,13 +88,17 @@ public class ShipController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space)) {
                 if (count % 2 == 0) 
                     StartThrust();
-                else 
+                else { 
                     EndThrust();
+                }
                 count++;
             }
         }
-        else
+        else {
             EndThrust();
+            rb.angularDrag = 0;
+            rb.drag = 0;
+        }
 
         if (thrustOn) {
             rb.AddForce(transform.forward * speed);
@@ -153,7 +173,7 @@ public class ShipController : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider col) {
-        lastPlanet = col.gameObject;
+        lastPlanet = col.gameObject.name;
         GameObject.Find("SpaceUI").SetActive(false);
         if (col.gameObject.name == "SunObject") {
             EndThrust();
@@ -171,6 +191,13 @@ public class ShipController : MonoBehaviour
     IEnumerator waiter() {
         yield return new WaitForSecondsRealtime(1.8f);
         Destroy(gameObject);
+    }
+
+    void LoadPosition() {
+        Vector3[] positions = planetPositions[lastPlanet];
+        transform.position = positions[0];
+        transform.rotation = Quaternion.Euler(positions[1]);
+        transform.localScale = new Vector3(3f, 3f, 3f);
     }
 }
 
