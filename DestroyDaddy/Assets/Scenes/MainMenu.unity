@@ -1718,7 +1718,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 492512385}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1035937632}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: Load
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &492512385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3428,7 +3440,7 @@ PrefabInstance:
     - target: {fileID: 6868111934174761153, guid: c2a79e6111ec95a43bbeb7013a1d5f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8780989323543084533, guid: c2a79e6111ec95a43bbeb7013a1d5f70,
         type: 3}
@@ -3656,6 +3668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startButton: {fileID: 1761838192}
+  loadButton: {fileID: 492512384}
   levelLoader: {fileID: 1889500070}
 --- !u!1 &1040857483
 GameObject:

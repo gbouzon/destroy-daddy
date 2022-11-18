@@ -105,6 +105,17 @@ public class MovementController : MonoBehaviour
     // Update is called once per frame
     void Update(){
         
+        if (Time.timeScale == 0) {
+            Cursor.lockState = CursorLockMode.None;
+            followCamera.GetComponent<CinemachineBrain>().enabled = false;
+            Cursor.visible = true;
+            return;
+        }
+        else {
+            Cursor.lockState = CursorLockMode.Locked;
+            followCamera.GetComponent<CinemachineBrain>().enabled = true;
+            Cursor.visible = false;
+        }
         move();
         handleMovementAnimation();
         handleAimingAnimation();

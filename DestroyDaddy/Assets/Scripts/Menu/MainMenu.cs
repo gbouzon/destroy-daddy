@@ -11,11 +11,21 @@ public class MainMenu : MonoBehaviour
     Button startButton;
 
     [SerializeField]
+    Button loadButton;
+
+    [SerializeField]
     GameObject levelLoader;
 
     /**
      * Quits the game session
      */
+
+    void Start() {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    
     public void Quit()
     {
         Application.Quit();
@@ -24,7 +34,12 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
-        levelLoader.SetActive(true);
+        LevelLoader.sceneTransition = true;
+        LevelLoader.nextScene = "Earth";
+    }
+
+    public void Load()
+    {
         LevelLoader.sceneTransition = true;
         LevelLoader.nextScene = "Earth";
     }
