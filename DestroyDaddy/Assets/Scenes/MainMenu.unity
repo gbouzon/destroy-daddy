@@ -3425,6 +3425,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 6868111934174761153, guid: c2a79e6111ec95a43bbeb7013a1d5f70,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2a79e6111ec95a43bbeb7013a1d5f70, type: 3}
 --- !u!1 &989653311
@@ -3646,6 +3651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startButton: {fileID: 1761838192}
+  levelLoader: {fileID: 1889500070}
 --- !u!1 &1040857483
 GameObject:
   m_ObjectHideFlags: 0
@@ -6670,6 +6676,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831693339}
   m_CullTransparentMesh: 1
+--- !u!1 &1889500070 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6868111934174761153, guid: c2a79e6111ec95a43bbeb7013a1d5f70,
+    type: 3}
+  m_PrefabInstance: {fileID: 925673400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1899429517
 GameObject:
   m_ObjectHideFlags: 0

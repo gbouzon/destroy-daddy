@@ -8,7 +8,7 @@ public class ShipController : MonoBehaviour
 
     Rigidbody rb;
     public static float speed = 1000f;
-    public static float maxFuel = 1000f;
+    public static float maxFuel = 100f;
     private int count;
     private bool thrustOn;
     public static float fuel;
