@@ -26,6 +26,13 @@ public class CameraBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0) {
+            Cursor.visible = true;
+            return;
+        }
+        else 
+            Cursor.visible = false;
+
         if (target != null) {
             float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
             float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
