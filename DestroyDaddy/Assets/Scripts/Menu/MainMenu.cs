@@ -10,6 +10,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     Button startButton;
 
+    [SerializeField]
+    GameObject levelLoader;
+
     /**
      * Quits the game session
      */
@@ -21,7 +24,8 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("Earth");
-        SceneManager.UnloadSceneAsync("MainMenu");
+        levelLoader.SetActive(true);
+        LevelLoader.sceneTransition = true;
+        LevelLoader.nextScene = "Earth";
     }
 }

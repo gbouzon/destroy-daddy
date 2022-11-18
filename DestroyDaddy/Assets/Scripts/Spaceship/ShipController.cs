@@ -183,8 +183,8 @@ public class ShipController : MonoBehaviour
             StartCoroutine(waiter());
         }
         else {
-            SceneManager.LoadScene(col.gameObject.name);
-            SceneManager.UnloadSceneAsync("Space");
+            LevelLoader.sceneTransition = true;
+            LevelLoader.nextScene = col.gameObject.name;
         }
     }
 

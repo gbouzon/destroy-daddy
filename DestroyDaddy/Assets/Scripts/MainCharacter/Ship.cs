@@ -16,8 +16,8 @@ public class Ship : MonoBehaviour
     void OnTriggerStay(Collider col) {
         if(col.gameObject.name == "Ship"){
             if (Input.GetKey(KeyCode.F)) {
-                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-                SceneManager.LoadScene("Space");
+                LevelLoader.sceneTransition = true;
+                LevelLoader.nextScene = "Space";
             }
         }
     }
