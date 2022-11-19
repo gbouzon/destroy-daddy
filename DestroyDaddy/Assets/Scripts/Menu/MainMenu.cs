@@ -16,6 +16,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     GameObject levelLoader;
 
+    public static PlayerData pd;
+
     /**
      * Quits the game session
      */
@@ -40,7 +42,16 @@ public class MainMenu : MonoBehaviour
 
     public void Load()
     {
-        LevelLoader.sceneTransition = true;
-        LevelLoader.nextScene = "Earth";
+        pd = SaveSystem.Load();
+        if (pd != null) {
+            pd.assignValues();
+            LevelLoader.sceneTransition = true;
+            LevelLoader.nextScene = pd.sceneName;
+        }
+        else {
+            LevelLoader.sceneTransition = true;
+            LevelLoader.nextScene = "Earth";
+        }
+        
     }
 }

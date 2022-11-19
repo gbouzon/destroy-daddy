@@ -26,7 +26,7 @@ public class CameraBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeScale == 0) {
+        if (Time.timeScale == 0 && PlayerUI.isSaving == false) {
             Cursor.visible = true;
             return;
         }

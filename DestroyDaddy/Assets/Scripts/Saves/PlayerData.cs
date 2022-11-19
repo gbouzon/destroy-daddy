@@ -29,5 +29,20 @@ public class PlayerData
         this.currentShip = currentShip;
         this.fuel = fuel;
     }
+
+    public void assignValues() {
+        if (health == float.MaxValue) 
+            PlayerExperience.startCount = 0;
+        else {
+            PlayerExperience.startCount = 1;
+            PlayerExperience.health = health;
+        }
+        if (fuel == float.MaxValue) 
+            ShipController.startCount = 0;
+        else {
+            ShipController.startCount = 1;
+            ShipController.fuel = fuel;
+        }
+    }
     
 }

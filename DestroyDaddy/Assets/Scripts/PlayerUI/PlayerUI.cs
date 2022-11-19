@@ -17,11 +17,18 @@ public class PlayerUI : MonoBehaviour
     [SerializeField]
     GameObject player;
 
+    [SerializeField]
+    GameObject saveText;
+
+    Animation savingAnimation;
     private static bool hasSaved;
+    public static bool isSaving;
 
     void Start()
     {
         hasSaved = false;
+        isSaving = false;
+        savingAnimation = saveText.GetComponent<Animation>();
     }
 
     // Update is called once per frame
@@ -29,7 +36,7 @@ public class PlayerUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (pauseMenu.activeSelf || finalToExit.activeSelf)
+            if ((pauseMenu.activeSelf || finalToExit.activeSelf) && isSaving == false)
             {
                 Resume();
             }
@@ -44,11 +51,8 @@ public class PlayerUI : MonoBehaviour
 
     public void Save() {
         hasSaved = true;
-        float[] playerPosition = {player.transform.position.x, player.transform.position.y, player.transform.position.z};
-        float[] playerRotation = {player.transform.rotation.x, player.transform.rotation.y, player.transform.rotation.z, player.transform.rotation.w};
-        PlayerData pd = new PlayerData(SceneManager.GetActiveScene().name, playerPosition, playerRotation, 
-        PlayerExperience.health, 0, 0, 0, new string[3], "", ShipController.fuel);
-        SaveSystem.Save(pd);
+        isSaving = true;
+        StartCoroutine(saveAnimation());
     }
 
     public void Resume() {
@@ -82,5 +86,23 @@ public class PlayerUI : MonoBehaviour
     public void SkipReturn() {
         pauseMenu.SetActive(true);
         finalToExit.SetActive(false);
+    }
+
+    IEnumerator saveAnimation() {
+        saveText.SetActive(true);
+        savingAnimation.Play();
+        yield return new WaitForSecondsRealtime(2.8f);
+        saveProcess();
+        saveText.SetActive(false);
+        isSaving = false;
+        yield break;
+    }
+
+    public void saveProcess() {
+        float[] playerPosition = {player.transform.position.x, player.transform.position.y, player.transform.position.z};
+        float[] playerRotation = {player.transform.rotation.x, player.transform.rotation.y, player.transform.rotation.z, player.transform.rotation.w};
+        PlayerData pd = new PlayerData(SceneManager.GetActiveScene().name, playerPosition, playerRotation, 
+        PlayerExperience.health, 0, 0, 0, new string[3], "", ShipController.fuel);
+        SaveSystem.Save(pd);
     }
 }

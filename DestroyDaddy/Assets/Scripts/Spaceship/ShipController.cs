@@ -11,8 +11,8 @@ public class ShipController : MonoBehaviour
     public static float maxFuel = 100f;
     private int count;
     private bool thrustOn;
-    public static float fuel;
-    private static int startCount = 0;
+    public static float fuel = float.MaxValue;
+    public static int startCount = 0;
 
     private static string lastPlanet;
 
@@ -50,6 +50,13 @@ public class ShipController : MonoBehaviour
             startCount++;
         }
         LoadPosition();
+        if (MainMenu.pd != null)
+        {
+            transform.position = new Vector3(MainMenu.pd.playerPosition[0], MainMenu.pd.playerPosition[1], MainMenu.pd.playerPosition[2]);
+            transform.rotation = new Quaternion(MainMenu.pd.playerRotation[0], MainMenu.pd.playerRotation[1], 
+                MainMenu.pd.playerRotation[2], MainMenu.pd.playerRotation[3]);
+            MainMenu.pd = null;
+        }
         count = 0;
         thrustOn = false;
         rb = GetComponent<Rigidbody>();

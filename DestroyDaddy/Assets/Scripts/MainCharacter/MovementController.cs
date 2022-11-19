@@ -99,16 +99,28 @@ public class MovementController : MonoBehaviour
         playerInput.MainCharacterControls.Mouse.canceled+= onMouse;
 
         setupJumpVariable();
+
+        if (MainMenu.pd != null) {
+            transform.position = new Vector3(MainMenu.pd.playerPosition[0], MainMenu.pd.playerPosition[1], MainMenu.pd.playerPosition[2]);
+            transform.rotation = new Quaternion(MainMenu.pd.playerRotation[0], MainMenu.pd.playerRotation[1], MainMenu.pd.playerRotation[2], MainMenu.pd.playerRotation[3]);
+            MainMenu.pd = null;
+        }
     }
 
 
     // Update is called once per frame
     void Update(){
         
-        if (Time.timeScale == 0) {
+        if (Time.timeScale == 0 && PlayerUI.isSaving == false) {
             Cursor.lockState = CursorLockMode.None;
             followCamera.GetComponent<CinemachineBrain>().enabled = false;
             Cursor.visible = true;
+            return;
+        }
+        else if (Time.timeScale == 0) {
+            Cursor.lockState = CursorLockMode.Locked;
+            followCamera.GetComponent<CinemachineBrain>().enabled = false;
+            Cursor.visible = false;
             return;
         }
         else {
