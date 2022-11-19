@@ -25,6 +25,8 @@ public class MainMenu : MonoBehaviour
     void Start() {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        PlayerExperience.startCount = 0;
+        ShipController.startCount = 0;
     }
 
     

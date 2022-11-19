@@ -28,7 +28,6 @@ public class PlayerUI : MonoBehaviour
     {
         hasSaved = false;
         isSaving = false;
-        savingAnimation = saveText.GetComponent<Animation>();
     }
 
     // Update is called once per frame
@@ -89,6 +88,7 @@ public class PlayerUI : MonoBehaviour
     }
 
     IEnumerator saveAnimation() {
+        savingAnimation = saveText.GetComponent<Animation>();
         saveText.SetActive(true);
         savingAnimation.Play();
         yield return new WaitForSecondsRealtime(2.8f);
@@ -102,7 +102,7 @@ public class PlayerUI : MonoBehaviour
         float[] playerPosition = {player.transform.position.x, player.transform.position.y, player.transform.position.z};
         float[] playerRotation = {player.transform.rotation.x, player.transform.rotation.y, player.transform.rotation.z, player.transform.rotation.w};
         PlayerData pd = new PlayerData(SceneManager.GetActiveScene().name, playerPosition, playerRotation, 
-        PlayerExperience.health, 0, 0, 0, new string[3], "", ShipController.fuel);
+        PlayerExperience.health, 0, 0, 0, new string[3], "", ShipController.lastPlanet,  ShipController.fuel);
         SaveSystem.Save(pd);
     }
 }

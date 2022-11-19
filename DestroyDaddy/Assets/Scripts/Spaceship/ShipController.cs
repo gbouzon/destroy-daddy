@@ -14,7 +14,7 @@ public class ShipController : MonoBehaviour
     public static float fuel = float.MaxValue;
     public static int startCount = 0;
 
-    private static string lastPlanet;
+    public static string lastPlanet = "Earth";
 
     private static Dictionary<string, Vector3[]> planetPositions = new Dictionary<string, Vector3[]> {
         {"Earth", new Vector3[] {new Vector3(-66f, 1074f, 149f), new Vector3(0, 166.174f, 0)}},
@@ -49,14 +49,15 @@ public class ShipController : MonoBehaviour
             fuel = maxFuel;
             startCount++;
         }
-        LoadPosition();
         if (MainMenu.pd != null)
         {
             transform.position = new Vector3(MainMenu.pd.playerPosition[0], MainMenu.pd.playerPosition[1], MainMenu.pd.playerPosition[2]);
             transform.rotation = new Quaternion(MainMenu.pd.playerRotation[0], MainMenu.pd.playerRotation[1], 
                 MainMenu.pd.playerRotation[2], MainMenu.pd.playerRotation[3]);
+            lastPlanet = MainMenu.pd.lastPlanet;
             MainMenu.pd = null;
         }
+        LoadPosition();
         count = 0;
         thrustOn = false;
         rb = GetComponent<Rigidbody>();

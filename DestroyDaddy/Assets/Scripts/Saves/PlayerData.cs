@@ -14,10 +14,11 @@ public class PlayerData
     public int currency;
     public string[] puzzleSolved;
     public string currentShip;
+    public string lastPlanet;
     public float fuel;
 
     public PlayerData(string sceneName, float[] playerPosition, float[] playerRotation, 
-    float health, int level, int experience, int currency, string[] puzzleSolved, string currentShip, float fuel) {
+    float health, int level, int experience, int currency, string[] puzzleSolved, string currentShip, string lastPlanet, float fuel) {
         this.sceneName = sceneName;
         this.playerPosition = playerPosition;
         this.playerRotation = playerRotation;
@@ -27,6 +28,7 @@ public class PlayerData
         this.currency = currency;
         this.puzzleSolved = puzzleSolved;
         this.currentShip = currentShip;
+        this.lastPlanet = lastPlanet;
         this.fuel = fuel;
     }
 
