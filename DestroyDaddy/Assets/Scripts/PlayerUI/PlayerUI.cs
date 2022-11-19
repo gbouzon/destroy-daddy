@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField]
     GameObject finalToExit;
+
+    [SerializeField]
+    GameObject player;
 
     private static bool hasSaved;
 
@@ -40,6 +44,11 @@ public class PlayerUI : MonoBehaviour
 
     public void Save() {
         hasSaved = true;
+        float[] playerPosition = {player.transform.position.x, player.transform.position.y, player.transform.position.z};
+        float[] playerRotation = {player.transform.rotation.x, player.transform.rotation.y, player.transform.rotation.z, player.transform.rotation.w};
+        PlayerData pd = new PlayerData(SceneManager.GetActiveScene().name, playerPosition, playerRotation, 
+        PlayerExperience.health, 0, 0, 0, new string[3], "", ShipController.fuel);
+        SaveSystem.Save(pd);
     }
 
     public void Resume() {

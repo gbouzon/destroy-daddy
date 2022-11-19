@@ -21078,6 +21078,7 @@ MonoBehaviour:
   playerView: {fileID: 2015039865}
   pauseMenu: {fileID: 4271979416676354513}
   finalToExit: {fileID: 3770825801897432352}
+  player: {fileID: 1064696123}
 --- !u!1 &1023814447
 GameObject:
   m_ObjectHideFlags: 0

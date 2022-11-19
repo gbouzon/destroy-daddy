@@ -6,10 +6,11 @@ using TMPro;
 
 public class PlayerExperience : MonoBehaviour
 {
-    private static float health;
+    public static float health;
     private float lerpTimer; // use to animate the health bar 
     public float maxHealth = 100;
     public float chipSpped = 2f; // control the delayed bar take to catch up to the other
+    private static int startCount = 0;
     public Image frontHealthBar; // the health bar that will be animated in front
     public Image backHealthBar; // the health bar that will be animated in back
     public TextMeshProUGUI healthText;
@@ -21,7 +22,11 @@ public class PlayerExperience : MonoBehaviour
     void Start()
     {
         GameObject enemy = GameObject.FindWithTag("enemyPrefab");
-        health = maxHealth; 
+        if (startCount == 0)
+        {
+            health = maxHealth;
+            startCount++;
+        }
         target = enemy.GetComponent<Transform>();
     }
 
