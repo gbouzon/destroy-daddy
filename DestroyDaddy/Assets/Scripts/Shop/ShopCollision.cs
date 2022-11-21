@@ -38,8 +38,10 @@ public class ShopCollision : MonoBehaviour
                 enterShopCanvas.SetActive(false);
                 gunCrossHair.SetActive(false);
                 shop.SetActive(true);
+                Time.timeScale = 0;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+               
             }
         }
         if (col.gameObject.name == "FuelTrigger" || col.gameObject.name == "FuelRecharge") {
@@ -49,6 +51,7 @@ public class ShopCollision : MonoBehaviour
                 ShipController.fuel = ShipController.maxFuel;
                 Debug.Log("Current Fuel: " + ShipController.fuel);
                 popUpWindow.SetActive(true);
+                Time.timeScale = 0;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
             }
@@ -67,5 +70,9 @@ public class ShopCollision : MonoBehaviour
         }
         popUpWindow.SetActive(false);
         fuelRechargeCanvas.SetActive(false);
+      
+    }
+    public void SetTimeScale() {
+        Time.timeScale = 1;
     }
 }
