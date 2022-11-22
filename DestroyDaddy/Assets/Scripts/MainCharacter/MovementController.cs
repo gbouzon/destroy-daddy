@@ -56,7 +56,7 @@ public class MovementController : MonoBehaviour
     bool isJumpAnimating;
     float initialJumpVelocity;
     float maxJumpHeight = 2.0f;
-    float maxJumpTime = 0.57f;
+    float maxJumpTime = 2f;
     float fallMultiplier = 3.0f;
     bool isJumping = false;
     private float verticalVelocity;
@@ -69,7 +69,7 @@ public class MovementController : MonoBehaviour
     int runningState = 3;
 
     void Awake(){
-
+        setupJumpVariable();
         Cursor.lockState = CursorLockMode.Locked;
         // initially set reference variable
         playerInput = new PlayerInput();
@@ -98,7 +98,7 @@ public class MovementController : MonoBehaviour
         playerInput.MainCharacterControls.Mouse.performed+= onMouse;
         playerInput.MainCharacterControls.Mouse.canceled+= onMouse;
 
-        setupJumpVariable();
+        
 
         if (MainMenu.pd != null) {
             transform.position = new Vector3(MainMenu.pd.playerPosition[0], MainMenu.pd.playerPosition[1], MainMenu.pd.playerPosition[2]);
@@ -260,8 +260,8 @@ public class MovementController : MonoBehaviour
             } else if(isRunPressed && isMovementPressed){
                  animator.SetInteger("JumpState", runningState);
             } else {
-                 animator.SetInteger("JumpState", idleState);
-            }
+                 animator.SetInteger("JumpState", nullState);
+            }            
             
             isJumping = true;
             verticalVelocity = initialJumpVelocity;
