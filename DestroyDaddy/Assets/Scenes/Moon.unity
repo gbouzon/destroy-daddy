@@ -383,12 +383,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6.392292, y: 5.6352205, z: 12.225796}
   m_Center: {x: -0.33512992, y: 2.8143547, z: 0.41388917}
---- !u!1 &209321533 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2601431208444789005, guid: 54feaccfcca3a9d43961b891635a2e1b,
-    type: 3}
-  m_PrefabInstance: {fileID: 504664811}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &358787611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,7 +1079,6 @@ MonoBehaviour:
   fuelRechargeCanvas: {fileID: 1848661333}
   popUpWindow: {fileID: 405163126}
   shop: {fileID: 0}
-  gunCrossHair: {fileID: 209321533}
 --- !u!1 &698791274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1571,6 +1564,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5705590113643402866, guid: 1a0f5dcb2fe9f0f4eb8ccdc3f193e084,
+        type: 3}
+      propertyPath: m_Text
+      value: Press        to Recharge Fuel
+      objectReference: {fileID: 0}
     - target: {fileID: 5705590113782943825, guid: 1a0f5dcb2fe9f0f4eb8ccdc3f193e084,
         type: 3}
       propertyPath: m_Name
