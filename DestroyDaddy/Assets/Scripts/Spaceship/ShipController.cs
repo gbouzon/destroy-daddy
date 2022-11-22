@@ -51,13 +51,19 @@ public class ShipController : MonoBehaviour
         }
         if (MainMenu.pd != null)
         {
-            transform.position = new Vector3(MainMenu.pd.playerPosition[0], MainMenu.pd.playerPosition[1], MainMenu.pd.playerPosition[2]);
-            transform.rotation = new Quaternion(MainMenu.pd.playerRotation[0], MainMenu.pd.playerRotation[1], 
-                MainMenu.pd.playerRotation[2], MainMenu.pd.playerRotation[3]);
-            lastPlanet = MainMenu.pd.lastPlanet;
+            if (MainMenu.pd.sceneName == "Space") {
+                transform.position = new Vector3(MainMenu.pd.playerPosition[0], MainMenu.pd.playerPosition[1], MainMenu.pd.playerPosition[2]);
+                transform.rotation = new Quaternion(MainMenu.pd.playerRotation[0], MainMenu.pd.playerRotation[1], 
+                    MainMenu.pd.playerRotation[2], MainMenu.pd.playerRotation[3]);
+            }
+            else {
+                lastPlanet = MainMenu.pd.lastPlanet;
+                LoadPosition();
+            }
             MainMenu.pd = null;
         }
-        LoadPosition();
+        else    
+            LoadPosition();
         count = 0;
         thrustOn = false;
         rb = GetComponent<Rigidbody>();
@@ -68,6 +74,8 @@ public class ShipController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0)
+            Cursor.lockState = CursorLockMode.None;
         if (Input.GetKey(KeyCode.W)) {
             MoveInDirectionOfInput();
             BothJets();
