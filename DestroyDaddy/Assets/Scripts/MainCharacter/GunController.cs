@@ -23,10 +23,11 @@ public class GunController : MonoBehaviour
     RaycastHit hit;
 
     [SerializeField]
-    private  CinemachineVirtualCamera  aimCamera; 
+    private  CinemachineVirtualCamera  aimCamera;
     private float timer;
     float rotationVelocity;
-    [SerializeField] Rig aimLayer;
+    [SerializeField] GameObject crosshair;
+
 
     
    
@@ -105,8 +106,12 @@ public class GunController : MonoBehaviour
                 GameObject laser = GameObject.Instantiate(muzzle, firePoint.position, rotation) as GameObject;
                 laser.GetComponent<ShotBehavior>().setTarget(hit.point);
                 GameObject.Destroy(laser, 0.5f);
+                crosshair.gameObject.SetActive(true);
+            } else {
+                crosshair.gameObject.SetActive(false);
             }
         }
+        
     }
 
     void aimRotation(){ 
