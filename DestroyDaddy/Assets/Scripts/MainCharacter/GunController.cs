@@ -13,7 +13,7 @@ public class GunController : MonoBehaviour
     // Shooting Variable
     [SerializeField]
     private float fireRate = 1f;
-    public float range = 1000f;
+    public float range = 500f;
     [SerializeField]
     private Transform firePoint;
 
@@ -27,8 +27,10 @@ public class GunController : MonoBehaviour
     private float timer;
     float rotationVelocity;
     [SerializeField] GameObject crosshair;
-    [SerializeField] LayerMask aimCollierLayerMask = new LayerMask();
 
+
+    
+   
     // private AudioSource gunAudio;
     MovementController mainCharacterScript;
     Vector3 targetPosition = Vector3.zero; 
@@ -47,18 +49,19 @@ public class GunController : MonoBehaviour
         }
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-        Debug.DrawRay(ray.origin, ray.direction * 300f, Color.red); 
-        if(Physics.Raycast(ray, out hit, Mathf.Infinity, aimCollierLayerMask)){
+        if(Physics.Raycast(ray, out hit, range)){
             targetPosition = hit.point;
             Shoot();
         }
-        Debug.Log(Physics.Raycast(ray, out hit));
 
          if(mainCharacterScript.getIsAim()){
             aimCamera.gameObject.SetActive(true);
             mainCharacterScript.setRotateOnMove(false);
            /// aimLayer.weight += Time.deltaTime / 0.3f;
             aimRotation();
+ 
+            
+
         }else{
             aimCamera.gameObject.SetActive(false);
             mainCharacterScript.setRotateOnMove(true);
