@@ -14,8 +14,8 @@ public class ShopCollision : MonoBehaviour
     GameObject popUpWindow;
     [SerializeField]
     GameObject shop;
-    [SerializeField]
-    GameObject gunCrossHair;
+    // [SerializeField]
+    // GameObject gunCrossHair;
 
     void Update() {
         Debug.Log("Max Fuel: " + ShipController.maxFuel);
@@ -36,7 +36,7 @@ public class ShopCollision : MonoBehaviour
         if(col.gameObject.name == "ShopTrigger"){
             if (Input.GetKey(KeyCode.F)) {
                 enterShopCanvas.SetActive(false);
-                gunCrossHair.SetActive(false);
+                // gunCrossHair.SetActive(false);
                 shop.SetActive(true);
                 Time.timeScale = 0;
                 Cursor.visible = true;
@@ -47,7 +47,7 @@ public class ShopCollision : MonoBehaviour
         if (col.gameObject.name == "FuelTrigger" || col.gameObject.name == "FuelRecharge") {
             if (Input.GetKey(KeyCode.F)) {
                 fuelRechargeCanvas.SetActive(false);
-                gunCrossHair.SetActive(false);
+                // gunCrossHair.SetActive(false);
                 ShipController.fuel = ShipController.maxFuel;
                 Debug.Log("Current Fuel: " + ShipController.fuel);
                 popUpWindow.SetActive(true);
@@ -59,7 +59,7 @@ public class ShopCollision : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape)) {
             popUpWindow.SetActive(false);
             Cursor.visible = false;
-            gunCrossHair.SetActive(true);
+            // gunCrossHair.SetActive(true);
         }
     }
 
