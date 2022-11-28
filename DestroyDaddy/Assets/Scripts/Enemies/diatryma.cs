@@ -21,6 +21,10 @@ public class diatryma : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
         Vector3 a = transform.position;
         Vector3 b = target.position;
         transform.LookAt(target);

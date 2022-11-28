@@ -23,6 +23,10 @@ public class bug : MonoBehaviour
     }
     void Update()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
         //getting position of character and bug
         Vector3 a = transform.position;
         Vector3 b = target.position;

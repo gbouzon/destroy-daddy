@@ -22,6 +22,10 @@ public class plant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
         Vector3 a = transform.position;
         Vector3 b = target.position;
         if (Vector3.Distance(a, b) < 10)
