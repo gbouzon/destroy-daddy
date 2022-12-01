@@ -8,10 +8,11 @@ public class dragon : MonoBehaviour
     private Animator animator;
     private int maxHealth = 2;
     private int currentHealth;
+    GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player");
         target = player.GetComponent<Transform>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
@@ -31,6 +32,7 @@ public class dragon : MonoBehaviour
         if (Vector3.Distance(a, b) < 2)
         {
             animator.Play("armSwipeAnimation");
+            player.GetComponent<PlayerExperience>().TakeDamage(0.15f);
         }
     }
 
@@ -41,6 +43,7 @@ public class dragon : MonoBehaviour
         {
             animator.Play("dieAnimation");
             Destroy(gameObject, 1);
+            player.GetComponent<XPBar>().GainExperienceFlatRate(15);
         }
     }
 }

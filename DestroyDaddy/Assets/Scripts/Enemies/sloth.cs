@@ -9,9 +9,10 @@ public class sloth : MonoBehaviour
     private float t;
     private int maxHealth = 2;
     private int currentHealth;
+    GameObject player;
     void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player");
         target = player.GetComponent<Transform>();
         t = Random.Range(0.001f, 0.01f);
         animator = GetComponent<Animator>();
@@ -28,6 +29,7 @@ public class sloth : MonoBehaviour
         if (Vector3.Distance(a, b) < 2)
         {
             animator.Play("biteAnimation");
+            player.GetComponent<PlayerExperience>().TakeDamage(0.05f);
         }
         else
         {
@@ -45,6 +47,7 @@ public class sloth : MonoBehaviour
         {
             animator.Play("dieAnimation");
             Destroy(gameObject, 1);
+            player.GetComponent<XPBar>().GainExperienceFlatRate(5);
         }
     }
 }

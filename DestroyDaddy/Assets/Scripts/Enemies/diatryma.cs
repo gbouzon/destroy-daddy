@@ -12,7 +12,7 @@ public class diatryma : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player");
         target = player.GetComponent<Transform>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
