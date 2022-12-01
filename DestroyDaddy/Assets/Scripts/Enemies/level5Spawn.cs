@@ -6,7 +6,7 @@ public class level5Spawn : MonoBehaviour
 {
     [SerializeField]
     private GameObject enemyPrefab;
-    private int firstWaveAmount = 1;
+    private int firstWaveAmount = 10;
     private int secondWaveAmount = 7;
     private float respawnTime;
     private int firstWave = 0;
@@ -15,8 +15,8 @@ public class level5Spawn : MonoBehaviour
     private bool isInFirstWave;
     private bool isNextWaveReady;
     private GameObject[] enemiesLeft;
-    private Vector3 location1 = new Vector3(821, 30, 420);
-    private Vector3 location2 = new Vector3(902, 89, 462);
+    private Vector3 location1 = new Vector3(917, 48, 472);
+    private Vector3 location2 = new Vector3(769, 47, 138);
     // Start is called before the first frame update
     void Start()
     {

@@ -33,7 +33,7 @@ public class sloth : MonoBehaviour
         }
         else
         {
-            transform.position = Vector3.Lerp(a, b, 0.001f);
+            transform.position = Vector3.Lerp(a, b, 0.01f);
             transform.LookAt(target);
         }
 
