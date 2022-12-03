@@ -82,6 +82,7 @@ public class GunController : MonoBehaviour
         if(Input.GetMouseButtonDown(0)){
             StartCoroutine(laserInstance());
         }
+        StartCoroutine(delete());
         
         if(Input.GetMouseButtonUp(0)){
             Destroy(laser,0.2f);
@@ -132,9 +133,14 @@ public class GunController : MonoBehaviour
 
     IEnumerator laserInstance(){
         yield return new WaitUntil(() =>
-        mainCharacterScript.animator.GetLayerWeight(2) >= 0.5f
+            mainCharacterScript.animator.GetLayerWeight(2) >= 0.65f
         );
         createLaser();
+    }
+
+    IEnumerator delete(){
+        yield return new WaitForSeconds(0.05f);
+        Destroy(laser,0.2f);
     }
 }
 
