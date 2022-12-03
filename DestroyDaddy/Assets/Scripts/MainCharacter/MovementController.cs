@@ -10,7 +10,7 @@ using UnityEngine.Animations.Rigging;
 public class MovementController : MonoBehaviour
 {
     private CharacterController mainCharacterController;
-    Animator animator;
+    public Animator animator;
     PlayerInput playerInput;
     Vector3 currentMovement;
     [SerializeField] private Rig aimRig;   
@@ -347,8 +347,7 @@ public class MovementController : MonoBehaviour
         } else {
             animator.SetLayerWeight(aimAnimationLayer, 
             Mathf.Lerp(animator.GetLayerWeight(aimAnimationLayer), 0f, Time.deltaTime * 10f));
-            aimRigWeight = 0f;
-            
+            aimRigWeight = 0f;         
         }
     }    
 //==================================================GET and SET methods======================================================//

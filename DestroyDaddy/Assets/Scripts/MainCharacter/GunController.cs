@@ -11,7 +11,7 @@ public class GunController : MonoBehaviour
 
     // Shooting Variable
     [SerializeField]
-    private float fireRate = 2f;
+    private float fireRate = 0.065f;
     [SerializeField]
     public float range = 20f;
     [SerializeField]
@@ -74,17 +74,19 @@ public class GunController : MonoBehaviour
             mainCharacterScript.setRotateOnMove(true);
         }
         
-
         if(Input.GetMouseButton(0)){
             aimRotation();
-            laserInstance();
             crosshair.SetActive(true);
         }
 
+        if(Input.GetMouseButtonDown(0)){
+            StartCoroutine(laserInstance());
+        }
+        
         if(Input.GetMouseButtonUp(0)){
             Destroy(laser,0.2f);
             crosshair.SetActive(false);
-        }    
+        }
     }
 
     void Shoot(RaycastHit hit) {
@@ -115,11 +117,10 @@ public class GunController : MonoBehaviour
         worldAimTarget.y = transform.position.y;
         Vector3 aimDir = worldAimTarget - transform.position;
         Quaternion rotation = Quaternion.LookRotation(aimDir,  Vector3.up);
-
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * turnSpeed);
     }
 
-    void laserInstance(){
+    void createLaser(){
         Destroy(laser);
         Vector3 aimDir = (targetPosition - firePoint.position).normalized;
         Quaternion rotation = Quaternion.LookRotation(aimDir,  Vector3.up);
@@ -127,6 +128,13 @@ public class GunController : MonoBehaviour
         laser.transform.parent = transform;
         LaserScript = laser.GetComponent<Hovl_Laser>();
         LaserScript.MaxLength = 26.5f;
+    }
+
+    IEnumerator laserInstance(){
+        yield return new WaitUntil(() =>
+        mainCharacterScript.animator.GetLayerWeight(2) >= 0.5f
+        );
+        createLaser();
     }
 }
 
