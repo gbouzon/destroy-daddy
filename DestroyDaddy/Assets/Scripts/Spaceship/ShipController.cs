@@ -16,6 +16,13 @@ public class ShipController : MonoBehaviour
 
     public static string lastPlanet = "Earth";
 
+    ParticleSystemRenderer rendererLeftJet;
+    ParticleSystemRenderer rendererRightJet;
+    ParticleSystemRenderer rendererLeftThrust;
+    ParticleSystemRenderer rendererRightThrust;
+    Material material;
+    public static string materialPath = "Materials/ThrustFlameRed";
+
     private static Dictionary<string, Vector3[]> planetPositions = new Dictionary<string, Vector3[]> {
         {"Earth", new Vector3[] {new Vector3(-66f, 1074f, 149f), new Vector3(0, 166.174f, 0)}},
         {"Moon", new Vector3[] {new Vector3(1394f, 1443f, 508.6f), new Vector3(0, 199.774f, 0)}},
@@ -42,7 +49,12 @@ public class ShipController : MonoBehaviour
 
     void Start()
     {
+        rendererLeftJet = GameObject.Find("LeftJet").GetComponent<ParticleSystemRenderer>();
+        rendererRightJet = GameObject.Find("RightJet").GetComponent<ParticleSystemRenderer>();
+        rendererRightThrust = GameObject.Find("RightThrust").GetComponent<ParticleSystemRenderer>();
+        rendererLeftThrust = GameObject.Find("LeftThrust").GetComponent<ParticleSystemRenderer>();
         Application.targetFrameRate = 30;
+
         if (startCount == 0)
         {
             lastPlanet = GameObject.Find("Earth").gameObject.name;
@@ -74,6 +86,7 @@ public class ShipController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        changeMaterial();
         if (Time.timeScale == 0)
             Cursor.lockState = CursorLockMode.None;
         if (Input.GetKey(KeyCode.W)) {
@@ -214,6 +227,14 @@ public class ShipController : MonoBehaviour
         transform.position = positions[0];
         transform.rotation = Quaternion.Euler(positions[1]);
         transform.localScale = new Vector3(3f, 3f, 3f);
+    }
+
+    void changeMaterial() {
+        Material matFile = Resources.Load<Material>(materialPath) as Material;
+        rendererLeftJet.material = matFile;
+        rendererRightJet.material = matFile;
+        rendererLeftThrust.material = matFile;
+        rendererRightThrust.material = matFile;
     }
 }
 
