@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Animations.Rigging;
 
 
 public class MovementController : MonoBehaviour
@@ -11,7 +12,8 @@ public class MovementController : MonoBehaviour
     private CharacterController mainCharacterController;
     Animator animator;
     PlayerInput playerInput;
-    Vector3 currentMovement;  
+    Vector3 currentMovement;
+    [SerializeField] private Rig aimRig;   
     
 
     // rotation with Camera Variable
@@ -20,8 +22,11 @@ public class MovementController : MonoBehaviour
     public GameObject cinemachineCameraTarget;
     Vector2 mouseInput;
     float rotationVelocity;
+    //If the character is grounded or not. Not part of the CharacterController built in grounded check
+    public bool Grounded = true;
     
-    
+    private float terminalVelocity = 53.0f;
+
     
     
     // Movement variable  
@@ -31,7 +36,9 @@ public class MovementController : MonoBehaviour
     private float playerSpeed;
     float targetRotation;
     private bool rotateOnMove = true;
+    private float aimRigWeight;
     
+    private float speed;
 
     // if user input Bool
     bool isMovementPressed;
@@ -39,7 +46,11 @@ public class MovementController : MonoBehaviour
     bool isJumpPressed;
     bool isAimPressed;
     bool isMouseMove; 
+    [Tooltip("What layers the character uses as ground")]
+    
 
+    
+    
     
 
     // cinemachine
@@ -50,26 +61,36 @@ public class MovementController : MonoBehaviour
 
     // gravity variable 
     float gravity = -9.8f; 
-    float groundedGravity = -.05f;
 
     // jumping variable
-    bool isJumpAnimating;
-    float initialJumpVelocity;
-    float maxJumpHeight = 2.0f;
-    float maxJumpTime = 2f;
-    float fallMultiplier = 3.0f;
-    bool isJumping = false;
+    public float maxJumpHeight = 2.0f;
     private float verticalVelocity;
+    public float SpeedChangeRate = 2;
+    // timeout deltatime
+    private float jumpTimeoutDelta;
+    private float fallTimeoutDelta;
+    public float GroundedOffset = -0.14f;
+    private float GroundedRadius = 0.28f;
+  
+    private float FallTimeout = 0.15f;
+
+    private float JumpTimeout = 0.50f;
+    public LayerMask GroundLayers;
 
 
     // Animation State
-    int nullState = 0;
-    int idleState = 1;
-    int walkingState = 2;
-    int runningState = 3;
+    private float animationBlend;
+    private int animSpeed;
+    private int animGrounded;
+    private int animJump;
+    private int animFreeFall;
+    private int animMotionSpeed;
+    private int aimAnimationLayer = 2; 
+        
 
     void Awake(){
-        setupJumpVariable();
+        //setupJumpVariable();
+        AssignAnimationIDs();
         Cursor.lockState = CursorLockMode.Locked;
         // initially set reference variable
         playerInput = new PlayerInput();
@@ -98,7 +119,6 @@ public class MovementController : MonoBehaviour
         playerInput.MainCharacterControls.Mouse.performed+= onMouse;
         playerInput.MainCharacterControls.Mouse.canceled+= onMouse;
 
-        
 
         if (MainMenu.pd != null) {
             transform.position = new Vector3(MainMenu.pd.playerPosition[0], MainMenu.pd.playerPosition[1], MainMenu.pd.playerPosition[2]);
@@ -128,16 +148,20 @@ public class MovementController : MonoBehaviour
             followCamera.GetComponent<CinemachineBrain>().enabled = true;
             Cursor.visible = false;
         }
+       
+        
+        
+        handleAimingAnimation();
+        handleJump();
+        GroundedCheck();
         move();
         handleMovementAnimation();
-        handleAimingAnimation();
-        handleGravity();
-        handleJump();
+        aimRig.weight = Mathf.Lerp(aimRig.weight, aimRigWeight, Time.deltaTime * 20f);
+        
     }
 
     void LateUpdate(){
        CameraRotation();
-  
     }
 
     //=================================================Handle functions for the playerInput CallBack==================================================================//
@@ -183,12 +207,19 @@ public class MovementController : MonoBehaviour
         playerInput.MainCharacterControls.Disable();
     }
 //============================================================Handle Movement==================================================================//    
-
+  
+    private void GroundedCheck()
+     {
+        // set sphere position, with offset
+        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
+            transform.position.z);
+        Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
+        animator.SetBool(animGrounded, Grounded);
+    }
 
     void move(){
         playerSpeed = !isRunPressed ? walkSpeed :runSpeed;
         
-
         if(isMovementPressed){
             targetRotation = Mathf.Atan2(currentMovement.x, currentMovement.z) * Mathf.Rad2Deg +
                 followCamera.transform.eulerAngles.y;
@@ -208,7 +239,6 @@ public class MovementController : MonoBehaviour
     }
 
         
-
     void CameraRotation()
         {
             // if there is an input 
@@ -219,11 +249,7 @@ public class MovementController : MonoBehaviour
 
                 // clamp our rotations so our values are limited 360 degrees
                 cinemachineTargetYaw = ClampAngle(cinemachineTargetYaw, float.MinValue, float.MaxValue);
-              //  if(isAimPressed){
-                    cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -40.0f, 50.0f);
-              //  } else{
-                   // cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -0.0f, 1.0f);
-               // }
+                cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, -40.0f, 50.0f);
                 
             }
             // Cinemachine will follow this target
@@ -240,115 +266,88 @@ public class MovementController : MonoBehaviour
 
 //===========================================================Handle Jumping============================================================================//
 
-    // set the initial velocity and gravity using jump height and duration
-    void setupJumpVariable(){
-        float timeToAplex = maxJumpTime / 2; 
-        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToAplex, 2);
-        initialJumpVelocity = (2 * maxJumpHeight) / timeToAplex;
-    }
-
-    // handle Jump animation and set the initialJumpVelocity to the y axic
     void handleJump(){
-        if(!isJumping && mainCharacterController.isGrounded && isJumpPressed){
-            isJumpAnimating = true;
-            animator.SetBool("isJumping", true);
-            
-            if(!isRunPressed && !isMovementPressed){
-                animator.SetInteger("JumpState", idleState);
-            } else if(!isRunPressed && isMovementPressed) {
-                animator.SetInteger("JumpState", walkingState);
-            } else if(isRunPressed && isMovementPressed){
-                 animator.SetInteger("JumpState", runningState);
-            } else {
-                 animator.SetInteger("JumpState", nullState);
-            }            
-            
-            isJumping = true;
-            verticalVelocity = initialJumpVelocity;
-            currentMovement.y = initialJumpVelocity;
-        } else if(!isJumpPressed && isJumping && mainCharacterController.isGrounded){
-            isJumping = false;
-            isJumpAnimating = false;
-            animator.SetInteger("JumpState", nullState);
-        }
-    }
-
-    void handleGravity(){
-        bool isFalling = currentMovement.y <= 0.0f || !isJumpPressed;
-        
-        //apply proper gravity if the player is grounded or not
-        if(mainCharacterController.isGrounded){
-            if(isJumpAnimating){
-                animator.SetBool("isJumping", false);
-                animator.SetInteger("JumpState", nullState);
-                isJumpAnimating = false;
+        if(Grounded){
+            fallTimeoutDelta = FallTimeout;
+            animator.SetBool(animJump, false);
+            animator.SetBool(animFreeFall, false);
+            if(verticalVelocity < 0.0f) {
+                verticalVelocity = -2;
             }
-            currentMovement.y = groundedGravity;
-            verticalVelocity = groundedGravity;
-        } else if(isFalling){
-            // Velocity Verlet Integration
-            float prevYVelocity = currentMovement.y;
-            currentMovement.y = currentMovement.y + ( gravity * fallMultiplier *  Time.deltaTime);
-            verticalVelocity = Mathf.Max((prevYVelocity + currentMovement.y) * .5f, -20.0f);
 
+            if(isJumpPressed && jumpTimeoutDelta <= 0.0f){
+                verticalVelocity = Mathf.Sqrt(maxJumpHeight * -2f * gravity);
+                animator.SetBool(animJump, true);
+            }
+
+            if (jumpTimeoutDelta >= 0.0f) jumpTimeoutDelta -= Time.deltaTime;
+        }else{
+            jumpTimeoutDelta = JumpTimeout;
+            if (fallTimeoutDelta >= 0.0f)
+                {
+                    fallTimeoutDelta -= Time.deltaTime;
+                }
+                else
+                {
+                    animator.SetBool(animFreeFall, true);
+                }
         }
-        else {
-            float prevYVelocity = currentMovement.y;
-            currentMovement.y = currentMovement.y + ( gravity * Time.deltaTime);
-            verticalVelocity = (prevYVelocity + currentMovement.y) * .5f;
-        }
+        if (verticalVelocity < terminalVelocity)
+            {
+                verticalVelocity += gravity * Time.deltaTime;
+            }
     }
 
 
 //========================================================Handle Animation============================================================================//
+    private void AssignAnimationIDs()
+    {
+        animSpeed = Animator.StringToHash("Speed");
+        animGrounded = Animator.StringToHash("Grounded");
+        animJump = Animator.StringToHash("Jump");
+        animFreeFall = Animator.StringToHash("FreeFall");
+        animMotionSpeed = Animator.StringToHash("MotionSpeed");
+    }
+    
     public void handleMovementAnimation(){
-        // get parameter values from animator
-        bool isWalking = animator.GetBool("isWalking");
-        bool isRunning = animator.GetBool("isRunning");
-        
-        //start walking if movement pressed is true and not already walking
-        if(isMovementPressed && !isWalking){
-            animator.SetBool("isWalking", true);
-        //stop walking if movement pressed is false and currently walking    
-        }else if(!isMovementPressed && isWalking){
-            animator.SetBool("isWalking", false);
+        float currentMainCharacterSpeed = new Vector3(mainCharacterController.velocity.x, 0.0f, mainCharacterController.velocity.z).magnitude;
+        float speedOffset = 0.1f;
+
+
+        if (currentMainCharacterSpeed  < playerSpeed - speedOffset ||
+            currentMainCharacterSpeed  > playerSpeed  + speedOffset){
+            // creates curved result rather than a linear one giving a more organic speed change
+                speed = Mathf.Lerp(currentMainCharacterSpeed, playerSpeed,
+                Time.deltaTime * SpeedChangeRate);
+
+                // round speed to 3 decimal places
+                speed = Mathf.Round(speed * 1000f) / 1000f;
+        }else{
+            speed = playerSpeed;
         }
-        //start running if movement and run pressed are true and not currently running   
-        if((isMovementPressed && isRunPressed) && !isRunning){
-            animator.SetBool("isRunning", true);
-        //stop running if movement or run pressed are false and currently running 
-        }else if((!isMovementPressed || !isRunPressed) && isRunning){
-            animator.SetBool("isRunning", false);
-        }
+                
+                
+        animationBlend = Mathf.Lerp(animationBlend, playerSpeed * currentMovement.magnitude, Time.deltaTime * SpeedChangeRate);
+        if (animationBlend < 0.01f) 
+            animationBlend = 0f;
+
+        animator.SetFloat(animSpeed, animationBlend);
+        animator.SetFloat(animMotionSpeed, currentMovement.magnitude);
     }
 
     public void handleAimingAnimation(){
-        bool isWalking = animator.GetBool("isWalking");
-        bool isRunning = animator.GetBool("isRunning");
-        bool isAiming = animator.GetBool("isAiming");
-        bool isFirePressed = Input.GetButton("Fire1"); // get the fire Input 
+        bool isFirePressed = Input.GetMouseButton(0); // get the fire Input 
 
          // set isAiming parameter in Animtor to true if aim or fire pressed   
-         if(isAimPressed || isFirePressed){
-            animator.SetBool("isAiming", true);
+        if(isAimPressed || isFirePressed){
             
-            
-            //set AimeState to idle if run and movement press is false and is not already running or walking
-            if(!isRunPressed && !isMovementPressed && !isWalking && !isRunning){
-                animator.SetInteger("AimState", idleState);
-            //set AimeState to walking if run press is false and movement press is true and is not already running
-            } else if(!isRunPressed && isMovementPressed && isWalking && !isRunning) {
-                animator.SetInteger("AimState", walkingState);
-            //set AimeState to Running if run press  movement press is true and is currently running     
-            } else if((isMovementPressed && isRunPressed) && isRunning){
-                 animator.SetInteger("AimState", runningState);
-            } else {
-                animator.SetInteger("AimState", nullState);
-            }
-         // set isAiming parameter in Animtor to false if aim or fire pressed    
-        } else if ((!isAimPressed && isAiming) || isFirePressed){
-            animator.SetBool("isAiming", false);
-            animator.SetInteger("AimState", nullState);
+           animator.SetLayerWeight(aimAnimationLayer, 
+            Mathf.Lerp(animator.GetLayerWeight(aimAnimationLayer), 1f, Time.deltaTime * 10f));
+            aimRigWeight = 1f;
+        } else {
+            animator.SetLayerWeight(aimAnimationLayer, 
+            Mathf.Lerp(animator.GetLayerWeight(aimAnimationLayer), 0f, Time.deltaTime * 10f));
+            aimRigWeight = 0f;
             
         }
     }    
