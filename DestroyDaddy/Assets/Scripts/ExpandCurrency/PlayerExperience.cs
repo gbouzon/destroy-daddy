@@ -18,6 +18,7 @@ public class PlayerExperience : MonoBehaviour
     GameObject enemy;
     
     
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +49,11 @@ public class PlayerExperience : MonoBehaviour
          // clamp health so its never below 0 
         UpdateHealthUI();
         health = Mathf.Clamp(health, 0, maxHealth);
+        if(health == 0){
+            //Display Game over
+            Destroy(gameObject); // or setActive(false);
+            //go the mainMenu
+        }
         
 
     }

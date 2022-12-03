@@ -24,6 +24,8 @@ public class XPBar : MonoBehaviour
     public float powerMultiplier = 2; // multiplier for the power of the xp bar
     [Range(7f, 14f)]
     public float divisionMultiplier = 7; // multiplier for the division of the xp bar
+    [SerializeField]
+    GameObject levelUpUI;
     
     
     // Start is called before the first frame update
@@ -104,6 +106,7 @@ public class XPBar : MonoBehaviour
         GetComponent<PlayerExperience>().IncreaseHealth(level); // increment player health based on the level
         requiredXP = CalculateRequiredXP(); // calculate the required xp for the next level
         levelText.text = "Level " + level; // update the level text
+        StartCoroutine(DispalyLevelUPUI());
     }
     /*
      * Function to calculate the required xp for the next level
@@ -119,4 +122,13 @@ public class XPBar : MonoBehaviour
         }
         return solveForRequiredXP / 4;
     }
+
+    IEnumerator DispalyLevelUPUI () {
+
+        // display the UI here
+        levelUpUI.SetActive(true);
+        yield return new WaitForSeconds(10); // if to long change the sec
+        levelUpUI.SetActive(false);
+    }
+
 }
