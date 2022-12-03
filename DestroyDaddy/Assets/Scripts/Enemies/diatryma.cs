@@ -9,12 +9,14 @@ public class diatryma : MonoBehaviour
     private int maxHealth = 2;
     private int currentHealth;
     GameObject player;
+    public EnemyHealthBar healthBar;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         target = player.GetComponent<Transform>();
         animator = GetComponent<Animator>();
+        healthBar.setMaxEnemyHealth(maxHealth);
         currentHealth = maxHealth;
     }
 
@@ -42,10 +44,12 @@ public class diatryma : MonoBehaviour
     public void HitByRay()
     {
         currentHealth--;
+        healthBar.setEnemyHealth(currentHealth);
         if (currentHealth <= 0)
         {
             animator.Play("dieAnimation");
             Destroy(gameObject, 1);
+            //GameObject.Find("GoldCoin").GetComponentInChildren<Currency>().SpawnCurreny(transform, 5);
             player.GetComponent<XPBar>().GainExperienceFlatRate(15);
         }
     }

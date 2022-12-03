@@ -9,6 +9,7 @@ public class plant : MonoBehaviour
     private int maxHealth = 4;
     private int currentHealth;
     GameObject player;
+    public EnemyHealthBar healthBar;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,7 @@ public class plant : MonoBehaviour
         target = player.GetComponent<Transform>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+        healthBar.setMaxEnemyHealth(maxHealth);
         animator.enabled = false;
     }
 
@@ -36,6 +38,7 @@ public class plant : MonoBehaviour
         if(animator.enabled == true)
         {
             transform.position = Vector3.Lerp(a, b, 0.01f);
+            animator.Play("walkAnimation");
         }
         if (Vector3.Distance(a, b) < 2)
         {
@@ -46,10 +49,12 @@ public class plant : MonoBehaviour
     public void HitByRay()
     {
         currentHealth--;
+        healthBar.setEnemyHealth(currentHealth);
         if (currentHealth <= 0)
         {
             animator.Play("dieAnimation");
             Destroy(gameObject, 1);
+            //GameObject.Find("GoldCoin").GetComponentInChildren<Currency>().SpawnCurreny(transform, 5);
             player.GetComponent<XPBar>().GainExperienceFlatRate(10);
         }
     }

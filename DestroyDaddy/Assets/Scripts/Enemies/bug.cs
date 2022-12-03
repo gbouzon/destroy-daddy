@@ -10,6 +10,7 @@ public class bug : MonoBehaviour
     private int maxHealth = 2;
     private int currentHealth;
     GameObject player;
+    public EnemyHealthBar healthBar;
     void Start()
     {
         //make every time a different speed for funzies
@@ -19,6 +20,7 @@ public class bug : MonoBehaviour
         target = player.GetComponent<Transform>();
         //getting animator
         anim = GetComponent<Animator>();
+        healthBar.setMaxEnemyHealth(maxHealth);
         currentHealth = maxHealth;
     }
     void Update()
@@ -46,10 +48,12 @@ public class bug : MonoBehaviour
     public void HitByRay()
     {
         currentHealth--;
+        healthBar.setEnemyHealth(currentHealth);
         if (currentHealth <= 0)
         {
             anim.Play("dieAnimation");
             Destroy(gameObject, 1);
+            //GameObject.Find("GoldCoin").GetComponentInChildren<Currency>().SpawnCurreny(transform, 1);
             player.GetComponent<XPBar>().GainExperienceFlatRate(5);
         }
     }
