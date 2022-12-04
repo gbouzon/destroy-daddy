@@ -24,8 +24,8 @@ public class XPBar : MonoBehaviour
     public float powerMultiplier = 2; // multiplier for the power of the xp bar
     [Range(7f, 14f)]
     public float divisionMultiplier = 7; // multiplier for the division of the xp bar
-    [SerializeField]
-    GameObject levelUpUI;
+    [SerializeField] GameObject levelUpUI;
+    public TextMeshProUGUI levelUpText;
     
     
     // Start is called before the first frame update
@@ -125,7 +125,8 @@ public class XPBar : MonoBehaviour
 
     IEnumerator DispalyLevelUPUI () {
 
-        // display the UI here
+        int oldLevel = level - 1; 
+        levelUpText.text = "Level " + oldLevel + " -> Level " + level; 
         levelUpUI.SetActive(true);
         yield return new WaitForSeconds(10); // if to long change the sec
         levelUpUI.SetActive(false);
