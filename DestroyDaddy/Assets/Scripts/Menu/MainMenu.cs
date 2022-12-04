@@ -7,15 +7,6 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {   
 
-    [SerializeField]
-    Button startButton;
-
-    [SerializeField]
-    Button loadButton;
-
-    [SerializeField]
-    GameObject levelLoader;
-
     public static PlayerData pd;
 
     /**

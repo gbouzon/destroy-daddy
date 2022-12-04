@@ -18,6 +18,9 @@ public class PlayerUI : MonoBehaviour
     GameObject player;
 
     [SerializeField]
+    GameObject gameOver;
+
+    [SerializeField]
     GameObject saveText;
 
     Animation savingAnimation;
@@ -28,6 +31,7 @@ public class PlayerUI : MonoBehaviour
     {
         hasSaved = false;
         isSaving = false;
+        gameOver.SetActive(false);
     }
 
     // Update is called once per frame

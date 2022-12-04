@@ -16,6 +16,7 @@ public class PlayerExperience : MonoBehaviour
     public TextMeshProUGUI healthText;
     Transform target;
     GameObject enemy;
+    GameObject gameOverUI;
     
     
     
@@ -50,9 +51,8 @@ public class PlayerExperience : MonoBehaviour
         UpdateHealthUI();
         health = Mathf.Clamp(health, 0, maxHealth);
         if(health == 0){
-            //Display Game over
+            gameOverUI.SetActive(true);
             Destroy(gameObject); // or setActive(false);
-            //go the mainMenu
         }
         
 
