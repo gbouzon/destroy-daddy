@@ -5,14 +5,14 @@ using TMPro;
 
 public class PlayerCurrency : MonoBehaviour
 {
-    public int money = 0;
+    public static int money = 1000;
     //public GameObject UIText;
 
     public TextMeshProUGUI UIText; 
     // Start is called before the first frame update
     void Start()
     {
-        UIText.text = "0$"; 
+        UIText.text = money + "$"; 
     }
 
     // Update is called once per frame

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 public class XPBar : MonoBehaviour
 {
-    public static int level;
+    public static int level = 1;
     public static float currentXP;
     public static float requiredXP;
     private float lerpTimer;

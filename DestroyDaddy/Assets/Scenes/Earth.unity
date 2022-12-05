@@ -1423,6 +1423,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1246422753913922586, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: gameOver
+      value: 
+      objectReference: {fileID: 239582843}
     - target: {fileID: 5020463650060491757, guid: 0ea74683a22cdc546a41793befbac9d2,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -1513,6 +1518,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5020463651555139762, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: gameOverUI
+      value: 
+      objectReference: {fileID: 239582843}
+    - target: {fileID: 5020463651555139763, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: money
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 5020463651555139767, guid: 0ea74683a22cdc546a41793befbac9d2,
         type: 3}
       propertyPath: followCamera
@@ -1523,8 +1538,39 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Character
       objectReference: {fileID: 0}
+    - target: {fileID: 5020463651555139771, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: enterShipCanvas
+      value: 
+      objectReference: {fileID: 1473382814}
+    - target: {fileID: 7773060419033801844, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: shop
+      value: 
+      objectReference: {fileID: 3218352226171215829}
+    - target: {fileID: 7773060419033801844, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: popUpWindow
+      value: 
+      objectReference: {fileID: 1172790392}
+    - target: {fileID: 7773060419033801844, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: enterShopCanvas
+      value: 
+      objectReference: {fileID: 1775894977043044215}
+    - target: {fileID: 7773060419033801844, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: fuelRechargeCanvas
+      value: 
+      objectReference: {fileID: 5705590114583496175}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ea74683a22cdc546a41793befbac9d2, type: 3}
+--- !u!1 &239582843 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1155057567341487723, guid: 0ea74683a22cdc546a41793befbac9d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 239582842}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &248044255
 GameObject:
   m_ObjectHideFlags: 0

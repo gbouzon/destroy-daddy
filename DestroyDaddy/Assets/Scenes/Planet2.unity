@@ -1002,6 +1002,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5020463651555139762, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: gameOverUI
+      value: 
+      objectReference: {fileID: 1895955013}
     - target: {fileID: 5020463651555139767, guid: 0ea74683a22cdc546a41793befbac9d2,
         type: 3}
       propertyPath: followCamera
@@ -1012,8 +1017,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Character
       objectReference: {fileID: 0}
+    - target: {fileID: 5020463651555139771, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: enterShipCanvas
+      value: 
+      objectReference: {fileID: 23925764}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ea74683a22cdc546a41793befbac9d2, type: 3}
+--- !u!1 &1895955013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1155057567341487723, guid: 0ea74683a22cdc546a41793befbac9d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1895955012}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2111719270
 GameObject:
   m_ObjectHideFlags: 0

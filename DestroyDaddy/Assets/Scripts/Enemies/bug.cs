@@ -54,6 +54,7 @@ public class bug : MonoBehaviour
             anim.Play("dieAnimation");
             Destroy(gameObject, 1);
             //GameObject.Find("GoldCoin").GetComponentInChildren<Currency>().SpawnCurreny(transform, 1);
+            player.GetComponent<PlayerCurrency>().addMoney(5);
             player.GetComponent<XPBar>().GainExperienceFlatRate(5);
         }
     }

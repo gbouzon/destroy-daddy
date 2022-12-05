@@ -1020,6 +1020,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5020463651555139762, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: gameOverUI
+      value: 
+      objectReference: {fileID: 2023368949}
     - target: {fileID: 5020463651555139767, guid: 0ea74683a22cdc546a41793befbac9d2,
         type: 3}
       propertyPath: followCamera
@@ -1030,8 +1035,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Character
       objectReference: {fileID: 0}
+    - target: {fileID: 5020463651555139771, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: enterShipCanvas
+      value: 
+      objectReference: {fileID: 1254434272}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ea74683a22cdc546a41793befbac9d2, type: 3}
+--- !u!1 &2023368949 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1155057567341487723, guid: 0ea74683a22cdc546a41793befbac9d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2023368948}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2136967115 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1312822282a02944e83de61b8b22a72a,
@@ -1101,17 +1117,17 @@ PrefabInstance:
     - target: {fileID: 2782339864024416481, guid: 34b2044c27fc88d4291186c18ff50ae9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 783.674
+      value: 635.264
       objectReference: {fileID: 0}
     - target: {fileID: 2782339864024416481, guid: 34b2044c27fc88d4291186c18ff50ae9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 24.133001
+      value: 1.643
       objectReference: {fileID: 0}
     - target: {fileID: 2782339864024416481, guid: 34b2044c27fc88d4291186c18ff50ae9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 379.50006
+      value: 425.50006
       objectReference: {fileID: 0}
     - target: {fileID: 2782339864024416481, guid: 34b2044c27fc88d4291186c18ff50ae9,
         type: 3}

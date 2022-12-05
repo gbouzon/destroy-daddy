@@ -397,8 +397,13 @@ PrefabInstance:
     - target: {fileID: 5020463651555139768, guid: 0ea74683a22cdc546a41793befbac9d2,
         type: 3}
       propertyPath: m_Name
-      value: Main Character (1)
+      value: Main Character
       objectReference: {fileID: 0}
+    - target: {fileID: 5020463651555139771, guid: 0ea74683a22cdc546a41793befbac9d2,
+        type: 3}
+      propertyPath: enterShipCanvas
+      value: 
+      objectReference: {fileID: 625703268}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ea74683a22cdc546a41793befbac9d2, type: 3}
 --- !u!1 &872027511
