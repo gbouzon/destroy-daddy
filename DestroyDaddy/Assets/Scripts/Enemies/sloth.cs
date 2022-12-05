@@ -51,6 +51,7 @@ public class sloth : MonoBehaviour
             animator.Play("dieAnimation");
             Destroy(gameObject, 1);
             //GameObject.Find("GoldCoin").GetComponentInChildren<Currency>().SpawnCurreny(transform, 5);
+            player.GetComponent<PlayerCurrency>().addMoney(5);
             player.GetComponent<XPBar>().GainExperienceFlatRate(5);
         }
     }
