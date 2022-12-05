@@ -128,7 +128,7 @@ public class XPBar : MonoBehaviour
         int oldLevel = level - 1; 
         levelUpText.text = "Level " + oldLevel + " -> Level " + level; 
         levelUpUI.SetActive(true);
-        yield return new WaitForSeconds(10); // if to long change the sec
+        yield return new WaitForSeconds(2); // if to long change the sec
         levelUpUI.SetActive(false);
     }
 

@@ -61,8 +61,8 @@ public class GunController : MonoBehaviour
             rigTarget.position = hit.point;
             Shoot(hit);
         }else{
-            targetPosition = Camera.main.transform.position + Camera.main.transform.forward * range;
-            rigTarget.position = Camera.main.transform.position + Camera.main.transform.forward * range;
+             targetPosition = Camera.main.transform.position + Camera.main.transform.forward * range;
+             rigTarget.position = Camera.main.transform.position + Camera.main.transform.forward * range;
         }   
          
         if(mainCharacterScript.getIsAim()){

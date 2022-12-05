@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
     }
 
     public void Load()
-    {
+    {   
         pd = SaveSystem.Load();
         if (pd != null) {
             pd.assignValues();
