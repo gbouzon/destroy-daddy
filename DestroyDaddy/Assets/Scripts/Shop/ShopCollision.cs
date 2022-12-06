@@ -14,6 +14,9 @@ public class ShopCollision : MonoBehaviour
     GameObject popUpWindow;
     [SerializeField]
     GameObject shop;
+    [SerializeField]
+    GameObject pauseCanvas;
+  
     // [SerializeField]
     // GameObject gunCrossHair;
 
@@ -22,7 +25,11 @@ public class ShopCollision : MonoBehaviour
         Debug.Log("Current Fuel: " + ShipController.fuel);
 
     }
+    public void ExitButtonClick() {
+        popUpWindow.SetActive(false);
+        Time.timeScale = 1;
 
+    }
     void OnTriggerEnter(Collider col) {
         if(col.gameObject.name == "ShopTrigger"){
             enterShopCanvas.SetActive(true);
@@ -70,9 +77,13 @@ public class ShopCollision : MonoBehaviour
         }
         popUpWindow.SetActive(false);
         fuelRechargeCanvas.SetActive(false);
-      
     }
     public void SetTimeScale() {
-        Time.timeScale = 1;
+        if (pauseCanvas.activeSelf) {
+            Time.timeScale = 0;
+    }
+        else {
+            Time.timeScale = 1;
+        }
     }
 }

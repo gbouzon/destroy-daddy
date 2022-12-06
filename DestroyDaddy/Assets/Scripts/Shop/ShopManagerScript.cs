@@ -4,8 +4,6 @@ using UnityEngine;
 using TMPro;
 public class ShopManagerScript : MonoBehaviour
 {
-    public static int MoneyAmount;
-    public static int MaxMoneyAmount= 10000;
     [SerializeField] private TextMeshProUGUI MoneyText;
     public List<string> PurchasedItems = new List<string>();
     private int price1 = 500;
@@ -17,22 +15,22 @@ public class ShopManagerScript : MonoBehaviour
  
     void Start()
     {
-      AddCash(); //testing for now
+        //AddCash();
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoneyText.text = "Cash : " + MoneyAmount;
+        MoneyText.text = "Cash : " + PlayerCurrency.money;
     }
 
     public void AddCash() {
-        MoneyAmount += 1000; //just testing
+        PlayerCurrency.money += 1000;
     }
 
     public void greenUpgrade() {
-        if (!PurchasedItems.Contains("greenUpgrade") && MoneyAmount >= price1) {
-            MoneyAmount -= 500;
+        if (!PurchasedItems.Contains("greenUpgrade") && PlayerCurrency.money >= price1) {
+            PlayerCurrency.money -= 500;
             ShipController.maxFuel = 300f;
             ShipController.speed = 1100f;
             ShipController.fuel = ShipController.maxFuel;
@@ -51,19 +49,19 @@ public class ShopManagerScript : MonoBehaviour
         //     success.SetActive(true);
         //     fail.SetActive(false);
         // }
-        // if (PurchasedItems.Contains("greenUpgrade") || MoneyAmount < price1) {
+        // if (PurchasedItems.Contains("greenUpgrade") || PlayerCurrency.money < price1) {
         //     fail.SetActive(true);
         // }
         
 
-        // if (MoneyAmount < price1) {
+        // if (PlayerCurrency.money < price1) {
         //     fail.SetActive(true);)
         // }
     }
 
     public void pinkUpgrade() {
-        if (!PurchasedItems.Contains("pinkUpgrade") && MoneyAmount >= price2) {
-            MoneyAmount -= 1000;
+        if (!PurchasedItems.Contains("pinkUpgrade") && PlayerCurrency.money >= price2) {
+            PlayerCurrency.money -= 1000;
             ShipController.maxFuel = 400f;
             ShipController.speed = 1200f;
             PurchasedItems.Add("pinkUpgrade");
@@ -80,8 +78,8 @@ public class ShopManagerScript : MonoBehaviour
     }
 
     public void purpleUpgrade() {
-        if (!PurchasedItems.Contains("purpleUgrade") && MoneyAmount >= price3) {
-            MoneyAmount -= 1500;
+        if (!PurchasedItems.Contains("purpleUgrade") && PlayerCurrency.money >= price3) {
+            PlayerCurrency.money -= 1500;
             ShipController.maxFuel = 700f;
             ShipController.speed = 1300f;
             Debug.Log("Current Fuel: " + ShipController.fuel);
@@ -99,8 +97,8 @@ public class ShopManagerScript : MonoBehaviour
     }
 
     public void blueUpgrade() {
-        if (!PurchasedItems.Contains("blueUpgrade") && MoneyAmount >= price4) {
-            MoneyAmount -= 2000;
+        if (!PurchasedItems.Contains("blueUpgrade") && PlayerCurrency.money >= price4) {
+            PlayerCurrency.money -= 2000;
             ShipController.maxFuel = 1000f;
             ShipController.speed = 1400f;
             Debug.Log("Current Fuel: " + ShipController.fuel);
