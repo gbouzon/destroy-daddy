@@ -26,6 +26,8 @@ public class PlayerUI : MonoBehaviour
     Animation savingAnimation;
     private static bool hasSaved;
     public static bool isSaving;
+    public static bool GameOver = false;
+    public static PlayerData pd;
 
     void Start()
     {
@@ -37,17 +39,25 @@ public class PlayerUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if ((pauseMenu.activeSelf || finalToExit.activeSelf) && isSaving == false)
+        if (GameOver) {
+            Time.timeScale = 0;
+            gameOver.SetActive(true);
+            playerView.SetActive(false);
+            GameOver = false;
+        }
+        else {
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Resume();
-            }
-            else
-            {
-                Time.timeScale = 0;
-                pauseMenu.SetActive(true);
-                playerView.SetActive(false);
+                if ((pauseMenu.activeSelf || finalToExit.activeSelf) && isSaving == false)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Time.timeScale = 0;
+                    pauseMenu.SetActive(true);
+                    playerView.SetActive(false);
+                }
             }
         }
     }
@@ -108,5 +118,22 @@ public class PlayerUI : MonoBehaviour
         PlayerData pd = new PlayerData(SceneManager.GetActiveScene().name, playerPosition, playerRotation, 
         PlayerExperience.health, 0, 0, 0, new string[3], "", ShipController.lastPlanet,  ShipController.fuel);
         SaveSystem.Save(pd);
+    }
+
+    public void Load()
+    {   
+        pd = SaveSystem.Load();
+        if (pd != null) {
+            pd.assignValues();
+            // doest seem to load
+            LevelLoader.sceneTransition = true;
+            LevelLoader.nextScene = pd.sceneName;
+        }
+        else {
+            LevelLoader.sceneTransition = true;
+            // issues with loading level
+            LevelLoader.nextScene = "Earth";
+        }
+        
     }
 }

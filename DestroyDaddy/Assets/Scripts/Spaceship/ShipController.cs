@@ -60,7 +60,6 @@ public class ShipController : MonoBehaviour
             lastPlanet = GameObject.Find("Earth").gameObject.name;
             fuel = maxFuel;
             startCount++;
-            Debug.Log("Start Count: " + startCount);
         }
         if (MainMenu.pd != null)
         {
@@ -82,12 +81,12 @@ public class ShipController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         thrustSource = GetComponent<AudioSource>();
         jetSource = leftJet.GetComponent<AudioSource>();
+        changeMaterial();
     }
 
     // Update is called once per frame
     void Update()
     {
-        changeMaterial();
         if (Time.timeScale == 0)
             Cursor.lockState = CursorLockMode.None;
         if (Input.GetKey(KeyCode.W)) {
@@ -217,6 +216,7 @@ public class ShipController : MonoBehaviour
     IEnumerator waiter() {
         yield return new WaitForSecondsRealtime(1.8f);
         Destroy(gameObject);
+        PlayerUI.GameOver = true;
     }
 
     void LoadPosition() {
