@@ -48,7 +48,7 @@ public class PlayerExperience : MonoBehaviour
         //     health = Mathf.Clamp(health, 0, maxHealth);
         // }
          // clamp health so its never below 0 
-        UpdateHealthUI();
+        UpdateHealthUI(); 
         health = Mathf.Clamp(health, 0, maxHealth);
         if(health == 0){
             gameOverUI.SetActive(true);
@@ -58,7 +58,7 @@ public class PlayerExperience : MonoBehaviour
 
     }
 
-    public void UpdateHealthUI()
+    public void UpdateHealthUI() 
     {
         //Debug.Log(health);
         float fillFront = frontHealthBar.fillAmount; // back health bar 
@@ -67,7 +67,7 @@ public class PlayerExperience : MonoBehaviour
         if (fillBack > hFraction) // check to see if damage was taken on the bar
         {
             frontHealthBar.fillAmount = hFraction;
-            backHealthBar.color = Color.red;
+            backHealthBar.color = Color.red; // when loosing health change color to red
             lerpTimer += Time.deltaTime; // increment lerptimer
             float percentComplete = lerpTimer / chipSpped; // track the completion of the lerp
             percentComplete = percentComplete * percentComplete; // animation look better
@@ -76,7 +76,7 @@ public class PlayerExperience : MonoBehaviour
 
         if (fillFront < hFraction) // check to see that the player gets new health
         {
-            backHealthBar.color = Color.green;
+            backHealthBar.color = Color.green; // when gaining health change color to green
             backHealthBar.fillAmount = hFraction;
             lerpTimer += Time.deltaTime;
             float percentComplete = lerpTimer / chipSpped;

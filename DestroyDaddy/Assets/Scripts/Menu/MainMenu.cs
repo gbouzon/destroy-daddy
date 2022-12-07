@@ -38,11 +38,13 @@ public class MainMenu : MonoBehaviour
         pd = SaveSystem.Load();
         if (pd != null) {
             pd.assignValues();
+            // doest seem to load
             LevelLoader.sceneTransition = true;
             LevelLoader.nextScene = pd.sceneName;
         }
         else {
             LevelLoader.sceneTransition = true;
+            // issues with loading level
             LevelLoader.nextScene = "Earth";
         }
         
