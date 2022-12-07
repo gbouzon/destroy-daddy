@@ -60,6 +60,7 @@ public class ShipController : MonoBehaviour
             lastPlanet = GameObject.Find("Earth").gameObject.name;
             fuel = maxFuel;
             startCount++;
+            Debug.Log("Start Count: " + startCount);
         }
         if (MainMenu.pd != null)
         {
@@ -107,10 +108,6 @@ public class ShipController : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) {
             transform.Rotate(0, 0.3f, 0);
             LeftJet();
-        }
-        
-        if (Input.GetKey(KeyCode.F)) {
-            fuel = 1000;
         }
 
         if (fuel > 0) {
